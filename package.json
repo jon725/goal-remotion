@@ -8,6 +8,7 @@
   "dependencies": {
     "@remotion/cli": "4.0.354",
     "@remotion/zod-types": "4.0.354",
+    "elevenlabs": "^1.59.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "remotion": "4.0.354",
@@ -23,8 +24,10 @@
   },
   "scripts": {
     "dev": "remotion studio",
-    "build": "remotion bundle",
+    "build": "remotion build",
     "upgrade": "remotion upgrade",
+    "start": "remotion preview",
+    "render": "remotion render",
     "lint": "eslint src && tsc"
   }
 }

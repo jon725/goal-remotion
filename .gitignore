@@ -2,6 +2,12 @@ node_modules
 dist
 .DS_Store
 .env
-
+# .env.local
+ELEVENLABS_API_KEY=sk_cfe9037161c26077de40a167d00c137fd8e0375c2438328e
 # Ignore the output video from Git but not videos you import into src/.
 out
+public/voiceovers/*.mp3
+
+# Server environment
+server/.env
+server/node_modules

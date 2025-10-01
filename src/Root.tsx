@@ -1,45 +1,39 @@
-import { Composition } from "remotion";
-import { HelloWorld, myCompSchema } from "./HelloWorld";
-import { Logo, myCompSchema2 } from "./HelloWorld/Logo";
-
-// Each <Composition> is an entry in the sidebar!
+import {Composition, staticFile} from 'remotion';
+import {POC_JourneyVideo} from './poc/POC_JourneyVideo';
 
 export const RemotionRoot: React.FC = () => {
+  const defaultProps = {
+    name: 'Brandon',
+    startWeight: 190,
+    currentWeight: 182,
+    goalWeight: 155,
+    plan: 'Injection' as const,
+    brand: '#F26622',
+    voiceoverUrl: staticFile('voiceovers/voiceover-Brandon-1759260979410.mp3'),
+  };
+
   return (
     <>
+      {/* Vertical (social) */}
       <Composition
-        // You can take the "id" to render a video:
-        // npx remotion render HelloWorld
-        id="HelloWorld"
-        component={HelloWorld}
-        durationInFrames={150}
+        id="journey-poc"
+        component={POC_JourneyVideo}
+        durationInFrames={3000}
         fps={30}
-        width={1920}
-        height={1080}
-        // You can override these props for each render:
-        // https://www.remotion.dev/docs/parametrized-rendering
-        schema={myCompSchema}
-        defaultProps={{
-          titleText: "Welcome to Remotion",
-          titleColor: "#000000",
-          logoColor1: "#91EAE4",
-          logoColor2: "#86A8E7",
-        }}
+        width={1080}
+        height={1920}
+        defaultProps={defaultProps}
       />
 
-      {/* Mount any React component to make it show up in the sidebar and work on it individually! */}
+      {/* Widescreen (results page) */}
       <Composition
-        id="OnlyLogo"
-        component={Logo}
-        durationInFrames={150}
+        id="journey-poc-wide"
+        component={POC_JourneyVideo}
+        durationInFrames={3000}
         fps={30}
         width={1920}
         height={1080}
-        schema={myCompSchema2}
-        defaultProps={{
-          logoColor1: "#91dAE2" as const,
-          logoColor2: "#86A8E7" as const,
-        }}
+        defaultProps={defaultProps}
       />
     </>
   );
