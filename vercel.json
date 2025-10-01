@@ -1,5 +1,3 @@
 {
-    "buildCommand": "remotion bundle src/index.ts --output=public",
-    "outputDirectory": "public",
-    "installCommand": "npm install"
+    "outputDirectory": "build"
   }
