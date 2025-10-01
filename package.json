@@ -7,7 +7,10 @@
   "private": true,
   "dependencies": {
     "@remotion/cli": "4.0.354",
+    "@remotion/lambda": "^4.0.354",
+    "@remotion/renderer": "^4.0.354",
     "@remotion/zod-types": "4.0.354",
+    "dotenv": "^17.2.3",
     "elevenlabs": "^1.59.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
@@ -24,7 +27,7 @@
   },
   "scripts": {
     "dev": "remotion studio",
-    "build": "remotion build",
+    "build": "remotion bundle src/index.ts --bundle-cache public",
     "upgrade": "remotion upgrade",
     "start": "remotion preview",
     "render": "remotion render",
