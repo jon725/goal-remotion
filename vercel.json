@@ -1,0 +1,4 @@
+{
+    "buildCommand": "remotion bundle src/index.ts",
+    "outputDirectory": "out"
+  }
