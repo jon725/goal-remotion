@@ -28,7 +28,7 @@
   },
   "scripts": {
     "dev": "remotion studio",
-    "build": "remotion bundle src/index.ts && cp public/player.html build/",
+    "build": "remotion bundle src/index.ts --public-path=/ && cp public/player.html build/",
     "upgrade": "remotion upgrade",
     "start": "remotion preview",
     "render": "remotion render",
