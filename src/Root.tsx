@@ -38,3 +38,9 @@ export const RemotionRoot: React.FC = () => {
     </>
   );
 };
+
+// Export to window for embedded player
+if (typeof window !== 'undefined') {
+  (window as any).RemotionRoot = RemotionRoot;
+  (window as any).POC_JourneyVideo = POC_JourneyVideo;
+}
