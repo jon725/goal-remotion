@@ -1,4 +1,4 @@
 {
-    "buildCommand": "remotion bundle src/index.ts",
-    "outputDirectory": "out"
+    "buildCommand": "remotion bundle src/index.ts --output=public",
+    "outputDirectory": "public"
   }
