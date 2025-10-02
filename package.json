@@ -30,8 +30,8 @@
   },
   "scripts": {
   "dev": "remotion studio",
-  "build": "remotion bundle src/index.ts --public-path=/ && cp public/player.html build/",
-  "build-player": "esbuild src/PlayerWrapper.tsx --bundle --outfile=public/player-bundle.js --global-name=RemotionPlayer --format=iife --jsx=automatic --loader:.tsx=tsx",
+  "build": "remotion bundle src/index.ts --public-path=/ && npm run build-player && cp public/player-bundle.js build/",
+"build-player": "esbuild src/PlayerWrapper.tsx --bundle --outfile=public/player-bundle.js --global-name=RemotionPlayer --format=iife --jsx=automatic --loader:.tsx=tsx",
   "upgrade": "remotion upgrade",
   "start": "remotion preview",
   "render": "remotion render",
