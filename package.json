@@ -23,16 +23,18 @@
     "@remotion/eslint-config-flat": "4.0.354",
     "@types/react": "19.0.0",
     "@types/web": "0.0.166",
+    "esbuild": "^0.25.10",
     "eslint": "9.19.0",
     "prettier": "3.6.0",
     "typescript": "5.8.2"
   },
   "scripts": {
-    "dev": "remotion studio",
-    "build": "remotion bundle src/index.ts --public-path=/ && cp public/player.html build/",
-    "upgrade": "remotion upgrade",
-    "start": "remotion preview",
-    "render": "remotion render",
-    "lint": "eslint src && tsc"
-  }
+  "dev": "remotion studio",
+  "build": "remotion bundle src/index.ts --public-path=/ && cp public/player.html build/",
+  "build-player": "esbuild src/PlayerWrapper.tsx --bundle --outfile=public/player-bundle.js --global-name=RemotionPlayer --format=iife --jsx=automatic --loader:.tsx=tsx",
+  "upgrade": "remotion upgrade",
+  "start": "remotion preview",
+  "render": "remotion render",
+  "lint": "eslint src && tsc"
+}
 }
