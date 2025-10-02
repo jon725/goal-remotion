@@ -1,5 +1,5 @@
 // api/render-video.js
-import { renderMediaOnLambda } from '@remotion/lambda/client';
+import { renderMediaOnLambda } from '@remotion/lambda';
 
 export default async function handler(req, res) {
   // Handle OPTIONS first, before anything else

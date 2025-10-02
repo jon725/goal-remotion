@@ -1,5 +1,5 @@
 // api/render-progress.js
-import { getRenderProgress } from '@remotion/lambda/client';
+import { getRenderProgress } from '@remotion/lambda';
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
