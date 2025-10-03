@@ -1,5 +1,6 @@
 import { Player } from '@remotion/player';
 import React from 'react';
+import * as ReactDOM from 'react-dom/client';
 import { z } from 'zod';
 import { POC_JourneyVideo } from './poc/POC_JourneyVideo';
 
@@ -33,5 +34,5 @@ export const PlayerWrapper = React.memo((props: z.infer<typeof PlayerPropsSchema
 
 PlayerWrapper.displayName = 'PlayerWrapper';
 
-export { React };
+export { React, ReactDOM };
 export default PlayerWrapper;
