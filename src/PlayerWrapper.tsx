@@ -14,6 +14,7 @@ const PlayerPropsSchema = z.object({
 
 export const PlayerWrapper = React.memo((props: z.infer<typeof PlayerPropsSchema>) => {
   const playerRef = React.useRef<any>(null);
+  const containerRef = React.useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = React.useState(false);
 
   const handlePlayClick = () => {
@@ -23,8 +24,16 @@ export const PlayerWrapper = React.memo((props: z.infer<typeof PlayerPropsSchema
     }
   };
 
+  const handleFullscreen = () => {
+    if (containerRef.current) {
+      if (containerRef.current.requestFullscreen) {
+        containerRef.current.requestFullscreen();
+      }
+    }
+  };
+
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+    <div ref={containerRef} style={{ position: 'relative', width: '100%', height: '100%' }}>
       <Player
         ref={playerRef}
         component={POC_JourneyVideo}
@@ -43,11 +52,8 @@ export const PlayerWrapper = React.memo((props: z.infer<typeof PlayerPropsSchema
         loop={false}
         showVolumeControls={true}
         clickToPlay={false}
-        doubleClickToFullscreen={true}
         spaceKeyToPlayOrPause={true}
         moveToBeginningWhenEnded={false}
-        allowFullscreen={true}
-        initiallyShowControls={true}
         style={{ 
           width: '100%', 
           height: '100%',
@@ -81,7 +87,28 @@ export const PlayerWrapper = React.memo((props: z.infer<typeof PlayerPropsSchema
         )}
       />
       
-      {/* Big Play Button Overlay */}
+      {/* Fullscreen Button */}
+      <button
+        onClick={handleFullscreen}
+        style={{
+          position: 'absolute',
+          bottom: '60px',
+          right: '20px',
+          background: 'rgba(0, 0, 0, 0.5)',
+          border: 'none',
+          borderRadius: '4px',
+          padding: '8px 12px',
+          cursor: 'pointer',
+          color: 'white',
+          fontSize: '20px',
+          zIndex: 10,
+        }}
+        title="Fullscreen"
+      >
+        ⛶
+      </button>
+      
+      {/* Big Play Button Overlay with Thumbnail */}
       {!isPlaying && (
         <div 
           onClick={handlePlayClick}
@@ -95,44 +122,57 @@ export const PlayerWrapper = React.memo((props: z.infer<typeof PlayerPropsSchema
             alignItems: 'center',
             justifyContent: 'center',
             cursor: 'pointer',
-            background: 'rgba(0, 0, 0, 0.3)',
+            background: 'linear-gradient(135deg, rgba(255, 244, 240, 0.95) 0%, rgba(255, 232, 221, 0.95) 100%)',
             borderRadius: '12px',
             transition: 'background 0.3s ease',
           }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(0, 0, 0, 0.4)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'rgba(0, 0, 0, 0.3)';
-          }}
         >
           <div style={{
-            width: '100px',
-            height: '100px',
-            borderRadius: '50%',
-            background: '#F26622',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 4px 20px rgba(242, 102, 34, 0.5)',
-            transition: 'transform 0.2s ease',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.1)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'scale(1)';
-          }}
-          >
-            <svg 
-              width="40" 
-              height="40" 
-              viewBox="0 0 24 24" 
-              fill="white"
-              style={{ marginLeft: '4px' }}
+            textAlign: 'center',
+          }}>
+            <div style={{
+              width: '100px',
+              height: '100px',
+              borderRadius: '50%',
+              background: '#F26622',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 4px 20px rgba(242, 102, 34, 0.5)',
+              margin: '0 auto 20px',
+              transition: 'transform 0.2s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'scale(1.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
             >
-              <path d="M8 5v14l11-7z"/>
-            </svg>
+              <svg 
+                width="40" 
+                height="40" 
+                viewBox="0 0 24 24" 
+                fill="white"
+                style={{ marginLeft: '4px' }}
+              >
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+            <div style={{
+              fontSize: '24px',
+              fontWeight: 700,
+              color: '#1A1A1A',
+              marginBottom: '8px',
+            }}>
+              Your Personalized Journey
+            </div>
+            <div style={{
+              fontSize: '16px',
+              color: '#666',
+            }}>
+              Click to watch your transformation plan
+            </div>
           </div>
         </div>
       )}
