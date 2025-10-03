@@ -57,43 +57,25 @@ function generateScript(name, currentWeight, goalWeight) {
   const monthsToGoal = Math.ceil(weightLoss / 1.5 / 4);
   
   return `
-Imagine yourself, ${name}, 6 months from now. Healthier, happier, more confident.
 
-With GLP-1 therapy, losing weight isn't about willpower alone. It's about science working with your body.
+Imagine yourself six months from now, 35 pounds lighter, healthier, happier, living the life you deserve. 
 
-Picture this: going from ${currentWeight} pounds to ${goalWeight} pounds. That's ${weightLoss} pounds lighter. More energy. Better health.
+Picture going from ${currentWeight} pounds to ${goalWeight} pounds. That transformation? It's closer than you think. 
 
-You won't be doing this alone. Meet your dedicated care team.
+You won't do this alone. Meet Dr. Michael Fitch, your board-certified physician, and Betsy Moeller, your nutritional coach. Real experts dedicated to your success. 
 
-Dr. Michael Fitch is your actual GOAL M D physician. No outsourced companies here. He'll oversee your entire journey, providing medical oversight, monthly check-ins, and adjusting your doses as needed.
+Your personalised journey, ${currentWeight} pounds to ${goalWeight} in approximately six months. Your medication delivered monthly. 
 
-And Betsy, your nutritional coach. She's a registered dietitian who'll help you build sustainable habits and maximize your results.
+Regular check-ins with Dr Fitch. Weekly support from Betsy. Unlimited messaging. Everything you need. 
 
-Here's your personalized path, ${name}. From ${currentWeight} pounds to ${goalWeight} pounds in approximately ${monthsToGoal} months.
+Thousands of people are already transforming their lives with GoalMD. This isn't a gimmick. These are real, lasting results. 
 
-You'll get GLP-1 medication delivered monthly, regular medical care from Dr. Fitch, weekly nutrition coaching from Betsy, smart tracking through our app, unlimited messaging, and detailed progress reports.
+So, what's next? You'll select your preferred treatment and book your appointment. This choice is provisional. Dr Fitch makes the final call. During your online consultation, he reviews your medical history and goals, then creates your personalised plan.
 
-You're joining thousands of success stories. Real people. Real results. No gimmicks.
+He may adjust your medication based on his clinical expertise. That's what sets us apart. Real medical oversight, not a vending machine. If you're not approved, you receive a full refund. Once approved, your medication arrives in five to seven days. 
 
-Here's exactly what happens after you sign up, ${name}.
+Your transformation begins right now. Start your treatment plan today.
 
-First, you've just qualified and selected your preferred medication plan.
-
-Within 24 hours, Dr. Fitch will personally review your case. He'll confirm the right treatment for you, or adjust it based on his clinical expertise.
-
-Within 48 hours, he'll call or video chat with you to discuss your personalized plan and answer any questions.
-
-Once approved, your medication ships in 2 to 3 days. Discreet packaging, fast delivery.
-
-In week one, Betsy will reach out for your first nutrition session, and you'll have ongoing support throughout your journey.
-
-Remember, the medication you selected is your preference, but Dr. Fitch has the final say. This is real medical care, not a vending machine.
-
-${name}, your transformation starts right now. Join 15,000 people who've transformed their lives with GOAL M D.
-
-Start your plan today.
-
-Your journey starts right now.
   `.trim();
 }
 
