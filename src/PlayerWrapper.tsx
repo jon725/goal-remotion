@@ -27,7 +27,7 @@ export const PlayerWrapper = React.memo((props: z.infer<typeof PlayerPropsSchema
       compositionWidth={1920}
       compositionHeight={1080}
       controls
-      autoPlay={true}
+      autoPlay={false}
       loop={false}
       showVolumeControls={true}
       clickToPlay={true}
