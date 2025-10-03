@@ -80,26 +80,20 @@ app.post('/api/generate-voiceover', async (req, res) => {
     const monthsToGoal = Math.ceil(weightLoss / 1.5 / 4);
 
     const script = `
-    Imagine yourself six months from now. ${weightLoss} pounds lighter. Healthier, happier, living the life you deserve.
-    <break time="1.5s"/>
-    
-    Picture the life you imagined ${startWeight} pounds to ${goalWeight} pounds. That transformation? It's closer than you think.
-    <break time="2s"/>
-    
-    You won't do this alone. Meet Dr. Michael Fitch, your board-certified physician. And Betsy Moeller, your nutritional coach. Real experts, dedicated to your success.
-    <break time="2s"/>
-    
-    Your personalized journey: ${startWeight} to ${goalWeight} pounds in approximately ${monthsToGoal} months. Your medication delivered monthly. Regular check-ins with Dr. Fitch. Weekly support from Betsy. Unlimited messaging. Everything you need.
-    <break time="2s"/>
-    
-    Thousands of people are already transforming their lives with GOAL M D. This isn't a gimmick. These are real, lasting results.
-    <break time="2s"/>
-    
-    So what's next? You'll select your preferred treatment and book your appointment. This choice is provisional - Dr. Fitch makes the final call. During your online consultation, he reviews your medical history and goals, then creates your personalized plan. He may adjust your medication based on his clinical expertise. That's what sets us apart - real medical oversight, not a vending machine. If you're not approved you recieve a full refund. Once approved, your medication arrives in five to seven days.
-    <break time="2s"/>
-    
-    Your transformation begins right now. Start your ${plan.toLowerCase()} plan today.
-    `.trim();
+Imagine yourself six months from now. ${weightLoss} pounds lighter. Healthier, happier, living the life you deserve.
+
+Picture the life you imagined. ${startWeight} pounds to ${goalWeight} pounds. That transformation? It's closer than you think.
+
+You won't do this alone. Meet Dr. Michael Fitch, your board-certified physician. And Betsy Moeller, your nutritional coach. Real experts, dedicated to your success.
+
+Your personalized journey: ${startWeight} to ${goalWeight} pounds in approximately ${monthsToGoal} months. Your medication delivered monthly. Regular check-ins with Dr. Fitch. Weekly support from Betsy. Unlimited messaging. Everything you need.
+
+Thousands of people are already transforming their lives with GOAL M D. This isn't a gimmick. These are real, lasting results.
+
+So what's next? You'll select your preferred treatment and book your appointment. This choice is provisional. Dr. Fitch makes the final call. During your online consultation, he reviews your medical history and goals, then creates your personalized plan. He may adjust your medication based on his clinical expertise. That's what sets us apart. Real medical oversight, not a vending machine. If you're not approved, you receive a full refund. Once approved, your medication arrives in five to seven days.
+
+Your transformation begins right now. Start your ${plan.toLowerCase()} plan today.
+`.trim();
 
     console.log('Generating voiceover with ElevenLabs...');
 
