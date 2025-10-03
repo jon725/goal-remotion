@@ -66,15 +66,6 @@ export const POC_JourneyVideo: React.FC<Props> = ({
   const displayPlan = plan === 'Oral' ? 'Tablet' : plan;
   const pricing = getPricing(couponCode, plan);
 
-  // VOICEOVER TIMING MARKERS (30fps)
-  // 0-8.25s (0-248 frames): Hero Opener
-  // 8.25-20s (248-600 frames): Transformation Vision
-  // 20-44s (600-1320 frames): Meet Your Team
-  // 44-68s (1320-2040 frames): Your Journey Timeline
-  // 68-74.5s (2040-2235 frames): Success Stories
-  // 74.5-94s (2235-2820 frames): What Happens Next
-  // 94-100s (2820-3000 frames): Final CTA
-
   return (
     <AbsoluteFill style={{
       fontFamily: 'Inter, -apple-system, system-ui, sans-serif'
@@ -86,13 +77,11 @@ export const POC_JourneyVideo: React.FC<Props> = ({
       <BrightBackground brand={brand} />
 
       <SafeArea>
-        {/* 0-8.25s: Hero Opener */}
         {frame < 248 && (
           <HeroOpener name={name} frame={frame} brand={brand} />
         )}
 
-        {/* 8.25-20s: Transformation Vision */}
-        {frame >= 248 && frame < 600 && (
+        {frame >= 248 && frame < 495 && (
           <TransformationVision
             startWeight={startWeight}
             goalWeight={goalWeight}
@@ -101,35 +90,30 @@ export const POC_JourneyVideo: React.FC<Props> = ({
           />
         )}
 
-        {/* 20-44s: Meet Your Team */}
-        {frame >= 600 && frame < 1320 && (
-          <MeetYourTeam frame={frame - 600} brand={brand} />
+        {frame >= 495 && frame < 930 && (
+          <MeetYourTeam frame={frame - 495} brand={brand} />
         )}
 
-        {/* 44-68s: Your Journey Timeline */}
-        {frame >= 1320 && frame < 2040 && (
+        {frame >= 930 && frame < 1470 && (
           <YourJourneyTimeline
             startWeight={startWeight}
             currentWeight={currentWeight}
             goalWeight={goalWeight}
             milestones={milestones}
             etaToGoal={etaToGoal}
-            frame={frame - 1320}
+            frame={frame - 930}
             brand={brand}
           />
         )}
 
-        {/* 68-74.5s: Success Stories */}
-        {frame >= 2040 && frame < 2235 && (
-          <SuccessStories frame={frame - 2040} brand={brand} />
+        {frame >= 1470 && frame < 1755 && (
+          <SuccessStories frame={frame - 1470} brand={brand} />
         )}
 
-        {/* 74.5-94s: What Happens Next */}
-        {frame >= 2235 && frame < 2820 && (
-          <WhatHappensNext frame={frame - 2235} brand={brand} />
+        {frame >= 1755 && frame < 2820 && (
+          <WhatHappensNext frame={frame - 1755} brand={brand} />
         )}
 
-        {/* 94-100s: Final CTA */}
         {frame >= 2820 && (
           <FinalCTA 
             plan={displayPlan} 
