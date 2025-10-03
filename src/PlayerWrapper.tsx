@@ -13,8 +13,6 @@ const PlayerPropsSchema = z.object({
 });
 
 export const PlayerWrapper = React.memo((props: z.infer<typeof PlayerPropsSchema>) => {
-  const [posterFrame] = React.useState(90); // Frame to use for thumbnail
-
   return (
     <Player
       component={POC_JourneyVideo}
@@ -36,21 +34,8 @@ export const PlayerWrapper = React.memo((props: z.infer<typeof PlayerPropsSchema
       doubleClickToFullscreen={true}
       spaceKeyToPlayOrPause={true}
       moveToBeginningWhenEnded={false}
-      renderPoster={({ height, width }) => (
-        <div style={{
-          height,
-          width,
-          position: 'relative',
-          overflow: 'hidden',
-        }}>
-          <POC_JourneyVideo 
-            {...props}
-            plan="Injection"
-            brand="#F26622"
-            voiceoverUrl={props.voiceoverUrl}
-          />
-        </div>
-      )}
+      initiallyShowControls={30}
+      posterFrame={90}
       style={{ 
         width: '100%', 
         height: '100%',
