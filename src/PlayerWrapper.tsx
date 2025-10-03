@@ -34,6 +34,7 @@ export const PlayerWrapper = React.memo((props: z.infer<typeof PlayerPropsSchema
       doubleClickToFullscreen={true}
       spaceKeyToPlayOrPause={true}
       moveToBeginningWhenEnded={false}
+      initialFrame={90}
       style={{ 
         width: '100%', 
         height: '100%',
