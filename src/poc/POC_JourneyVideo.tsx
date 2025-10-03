@@ -11,7 +11,7 @@ import {FinalCTA} from './components/FinalCTA';
 import {projectETAs, DEFAULT_ASSUMPTIONS, type PlanAssumptions} from './planMath';
 import {getPricing} from './pricingUtils';
 
-type Props = {
+export type Props = {
   name: string;
   startWeight: number;
   currentWeight: number;

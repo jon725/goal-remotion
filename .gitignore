@@ -11,3 +11,4 @@ public/voiceovers/*.mp3
 # Server environment
 server/.env
 server/node_modules
+.vercel

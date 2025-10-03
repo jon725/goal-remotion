@@ -1,22 +1,24 @@
-import React from 'react';
 import { Player } from '@remotion/player';
+import React from 'react';
+import { z } from 'zod';
 import { POC_JourneyVideo } from './poc/POC_JourneyVideo';
 
-interface PlayerProps {
-  name: string;
-  startWeight: number;
-  currentWeight: number;
-  goalWeight: number;
-  voiceoverUrl: string | null;
-}
+const PlayerPropsSchema = z.object({
+  name: z.string(),
+  startWeight: z.number(),
+  currentWeight: z.number(),
+  goalWeight: z.number(),
+  voiceoverUrl: z.string().optional(),
+});
 
-export const PlayerWrapper: React.FC<PlayerProps> = (props) => {
+export const PlayerWrapper = React.memo((props: z.infer<typeof PlayerPropsSchema>) => {
   return (
     <Player
       component={POC_JourneyVideo}
       inputProps={{
         ...props,
-        plan: 'Injection' as const,
+        voiceoverUrl: props.voiceoverUrl || undefined,
+        plan: 'Injection',
         brand: '#F26622',
       }}
       durationInFrames={3000}
@@ -27,11 +29,9 @@ export const PlayerWrapper: React.FC<PlayerProps> = (props) => {
       style={{ width: '100%', aspectRatio: '16/9' }}
     />
   );
-};
+});
 
-// Export to window for Webflow
-if (typeof window !== 'undefined') {
-  (window as any).RemotionPlayerWrapper = PlayerWrapper;
-  (window as any).React = React;
-  (window as any).ReactDOM = require('react-dom');
-}
+PlayerWrapper.displayName = 'PlayerWrapper';
+
+export { React };
+export default PlayerWrapper;
