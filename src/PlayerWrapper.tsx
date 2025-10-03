@@ -3,6 +3,7 @@ import React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { z } from 'zod';
 import { POC_JourneyVideo } from './poc/POC_JourneyVideo';
+import { Composition, continueRender, delayRender } from 'remotion';
 
 const PlayerPropsSchema = z.object({
   name: z.string(),
@@ -25,9 +26,20 @@ export const PlayerWrapper = React.memo((props: z.infer<typeof PlayerPropsSchema
   };
 
   const handleFullscreen = () => {
-    if (containerRef.current) {
-      if (containerRef.current.requestFullscreen) {
-        containerRef.current.requestFullscreen();
+    const elem = containerRef.current;
+    if (!elem) return;
+
+    if (!document.fullscreenElement) {
+      if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+      } else if ((elem as any).webkitRequestFullscreen) {
+        (elem as any).webkitRequestFullscreen();
+      } else if ((elem as any).msRequestFullscreen) {
+        (elem as any).msRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
       }
     }
   };
@@ -54,6 +66,7 @@ export const PlayerWrapper = React.memo((props: z.infer<typeof PlayerPropsSchema
         clickToPlay={false}
         spaceKeyToPlayOrPause={true}
         moveToBeginningWhenEnded={false}
+        initialFrame={150}
         style={{ 
           width: '100%', 
           height: '100%',
@@ -92,23 +105,29 @@ export const PlayerWrapper = React.memo((props: z.infer<typeof PlayerPropsSchema
         onClick={handleFullscreen}
         style={{
           position: 'absolute',
-          bottom: '60px',
-          right: '20px',
-          background: 'rgba(0, 0, 0, 0.5)',
+          bottom: '70px',
+          right: '15px',
+          background: 'rgba(0, 0, 0, 0.6)',
           border: 'none',
           borderRadius: '4px',
-          padding: '8px 12px',
+          padding: '10px',
           cursor: 'pointer',
           color: 'white',
-          fontSize: '20px',
-          zIndex: 10,
+          zIndex: 100,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '40px',
+          height: '40px',
         }}
         title="Fullscreen"
       >
-        ⛶
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+          <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+        </svg>
       </button>
       
-      {/* Big Play Button Overlay with Thumbnail */}
+      {/* Big Play Button Overlay */}
       {!isPlaying && (
         <div 
           onClick={handlePlayClick}
@@ -122,57 +141,45 @@ export const PlayerWrapper = React.memo((props: z.infer<typeof PlayerPropsSchema
             alignItems: 'center',
             justifyContent: 'center',
             cursor: 'pointer',
-            background: 'linear-gradient(135deg, rgba(255, 244, 240, 0.95) 0%, rgba(255, 232, 221, 0.95) 100%)',
+            background: 'rgba(0, 0, 0, 0.3)',
             borderRadius: '12px',
             transition: 'background 0.3s ease',
+            zIndex: 50,
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(0, 0, 0, 0.4)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(0, 0, 0, 0.3)';
           }}
         >
           <div style={{
-            textAlign: 'center',
-          }}>
-            <div style={{
-              width: '100px',
-              height: '100px',
-              borderRadius: '50%',
-              background: '#F26622',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 4px 20px rgba(242, 102, 34, 0.5)',
-              margin: '0 auto 20px',
-              transition: 'transform 0.2s ease',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'scale(1.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
-            }}
+            width: '100px',
+            height: '100px',
+            borderRadius: '50%',
+            background: '#F26622',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 20px rgba(242, 102, 34, 0.5)',
+            transition: 'transform 0.2s ease',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'scale(1.1)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'scale(1)';
+          }}
+          >
+            <svg 
+              width="40" 
+              height="40" 
+              viewBox="0 0 24 24" 
+              fill="white"
+              style={{ marginLeft: '4px' }}
             >
-              <svg 
-                width="40" 
-                height="40" 
-                viewBox="0 0 24 24" 
-                fill="white"
-                style={{ marginLeft: '4px' }}
-              >
-                <path d="M8 5v14l11-7z"/>
-              </svg>
-            </div>
-            <div style={{
-              fontSize: '24px',
-              fontWeight: 700,
-              color: '#1A1A1A',
-              marginBottom: '8px',
-            }}>
-              Your Personalized Journey
-            </div>
-            <div style={{
-              fontSize: '16px',
-              color: '#666',
-            }}>
-              Click to watch your transformation plan
-            </div>
+              <path d="M8 5v14l11-7z"/>
+            </svg>
           </div>
         </div>
       )}
