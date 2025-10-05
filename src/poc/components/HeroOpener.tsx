@@ -20,8 +20,6 @@ export const HeroOpener: React.FC<{
   
   const scaleIn = spring({frame: frame - 20, fps, config: {damping: 15, mass: 0.5}});
   
-  // Voiceover: "Imagine yourself 6 months from now... healthier, happier, more confident"
-  
   return (
     <div style={{
       position:'absolute',
@@ -34,23 +32,23 @@ export const HeroOpener: React.FC<{
       transform: `translateY(${slideUp}px)`
     }}>
       <div style={{
-        fontSize: 28,
+        fontSize: 40, // Increased from 28
         fontWeight: 600,
         color: '#64748b',
-        marginBottom: 24,
-        letterSpacing: 2,
+        marginBottom: 32,
+        letterSpacing: 3,
         textTransform: 'uppercase'
       }}>
         Imagine Yourself
       </div>
       
       <div style={{
-        fontSize: 92,
+        fontSize: 120, // Increased from 92
         fontWeight: 900,
         color: '#0f172a',
         textAlign: 'center',
         lineHeight: 1.1,
-        marginBottom: 32,
+        marginBottom: 40,
         background: `linear-gradient(135deg, #0f172a 0%, ${brand} 100%)`,
         WebkitBackgroundClip: 'text',
         backgroundClip: 'text',
@@ -60,11 +58,11 @@ export const HeroOpener: React.FC<{
       </div>
       
       <div style={{
-        fontSize: 32,
+        fontSize: 44, // Increased from 32
         fontWeight: 500,
         color: '#475569',
         textAlign: 'center',
-        maxWidth: 900,
+        maxWidth: 1200, // Increased from 900
         lineHeight: 1.6,
         marginBottom: 48,
         transform: `scale(${scaleIn})`,
@@ -76,16 +74,15 @@ export const HeroOpener: React.FC<{
         </span>
       </div>
       
-      {/* Subtle pulsing element */}
       {frame > 40 && (
         <div style={{
-          padding: '16px 32px',
+          padding: '20px 40px', // Increased padding
           background: `${brand}15`,
           border: `2px solid ${brand}40`,
           borderRadius: 16,
           color: brand,
           fontWeight: 700,
-          fontSize: 20,
+          fontSize: 28, // Increased from 20
           animation: 'pulse 2s ease-in-out infinite'
         }}>
           ✨ Your transformation starts here

@@ -9,6 +9,22 @@ export const MeetYourTeam: React.FC<{
   const isMobile = height > width;
   const fadeIn = interpolate(frame, [0, 20], [0, 1], {extrapolateRight: 'clamp'});
   
+  // Dr. Fitch shows from frame 0-210
+  // Transition happens 210-240
+  // Betsy shows from 240+
+  const drFitchOpacity = interpolate(frame, [0, 20, 210, 240], [0, 1, 1, 0], {extrapolateRight: 'clamp'});
+  const betsyOpacity = interpolate(frame, [210, 240], [0, 1], {extrapolateRight: 'clamp'});
+  
+  const drFitchSlide = interpolate(frame, [210, 240], [0, -100], {
+    easing: Easing.inOut(Easing.ease),
+    extrapolateRight: 'clamp'
+  });
+  
+  const betsySlide = interpolate(frame, [210, 240], [100, 0], {
+    easing: Easing.inOut(Easing.ease),
+    extrapolateRight: 'clamp'
+  });
+  
   return (
     <div style={{
       position:'absolute',
@@ -17,63 +33,56 @@ export const MeetYourTeam: React.FC<{
       alignItems:'center',
       justifyContent:'center',
       opacity: fadeIn,
-      padding: isMobile ? '60px 40px' : '0 80px'
+      padding: isMobile ? '60px 40px' : '80px 120px'
     }}>
-      <div style={{maxWidth: isMobile ? '100%' : 1400, width: '100%'}}>
+      <div style={{maxWidth: 1600, width: '100%', position: 'relative'}}>
+        {/* Title - stays throughout */}
         <div style={{
-          fontSize: isMobile ? 42 : 56,
+          fontSize: isMobile ? 42 : 72,
           fontWeight: 900,
           color: '#0f172a',
           textAlign: 'center',
-          marginBottom: isMobile ? 16 : 24,
+          marginBottom: 64,
           lineHeight: 1.1
         }}>
           Meet Your Personal Care Team
         </div>
         
+        {/* Dr. Fitch Card */}
         <div style={{
-          fontSize: isMobile ? 18 : 24,
-          color: '#64748b',
-          textAlign: 'center',
-          marginBottom: isMobile ? 40 : 80,
-          fontWeight: 500,
-          padding: isMobile ? '0 20px' : '0',
-          lineHeight: 1.4
+          position: 'absolute',
+          width: '100%',
+          opacity: drFitchOpacity,
+          transform: `translateX(${drFitchSlide}%)`,
+          pointerEvents: frame > 210 ? 'none' : 'auto'
         }}>
-          Your dedicated team knows you, your goals, and your journey — every step of the way. Unlike other companies, you’ll always speak with the same trusted experts who stay with you from start to finish. <span style={{color: brand, fontWeight: 700}}>No outsourced companies.</span>
-        </div>
-        
-        <div style={{
-          display: 'flex',
-          flexDirection: isMobile ? 'column' : 'row',
-          gap: isMobile ? 40 : 60,
-          maxWidth: isMobile ? '100%' : 1200,
-          margin: '0 auto'
-        }}>
-          {/* Dr. Fitch */}
-          <TeamMember
+          <TeamMemberCard
             name="Dr. Michael Fitch"
             role="Your GOAL.MD Physician"
-            description="Your GOAL.MD Physician Board-certified in weight management and metabolic health, Dr. Fitch personally oversees your progress and treatment."
-            frame={frame}
-            delay={20}
+            description="Board-certified in weight management. Dr. Fitch personally oversees your treatment from start to finish."
             brand={brand}
             imageUrl="https://assets.cdn.filesafe.space/LchNNcx4oSFzaphyXK3t/media/689d01e1d232a3b5c315a965.png"
             highlights={[
-              'Safe prescriptions with real oversight',
               'Direct monthly check-ins with your physician',
-              'Personalized dosing for maximum results'
+              'Personalized dosing for maximum results',
+              'Real medical oversight, not a vending machine'
             ]}
             isMobile={isMobile}
           />
-          
-          {/* Betsy */}
-          <TeamMember
+        </div>
+        
+        {/* Betsy Card */}
+        <div style={{
+          position: 'absolute',
+          width: '100%',
+          opacity: betsyOpacity,
+          transform: `translateX(${betsySlide}%)`,
+          pointerEvents: frame < 240 ? 'none' : 'auto'
+        }}>
+          <TeamMemberCard
             name="Betsy Moeller"
-            role="Your Nutritional Coach"
-            description="Nutrition coach helping you turn results into lasting success through practical, sustainable strategies."
-            frame={frame}
-            delay={35}
+            role="Your Nutrition Coach"
+            description="Registered dietitian helping you turn results into lasting success through practical strategies."
             brand={brand}
             imageUrl="https://storage.googleapis.com/msgsndr/LchNNcx4oSFzaphyXK3t/media/68b87a79ca12c66425fd793c.png"
             highlights={[
@@ -85,34 +94,28 @@ export const MeetYourTeam: React.FC<{
           />
         </div>
         
-        {/* Trust badge */}
-        {frame > 80 && (
+        {/* Trust badge at bottom */}
+        {frame > 300 && (
           <div style={{
-            marginTop: isMobile ? 40 : 60,
-            textAlign: 'center',
-            opacity: interpolate(frame, [80, 100], [0, 1], {extrapolateRight: 'clamp'})
+            position: 'absolute',
+            bottom: -100,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            opacity: interpolate(frame, [300, 320], [0, 1], {extrapolateRight: 'clamp'})
           }}>
             <div style={{
-              display: 'inline-block',
-              padding: isMobile ? '16px 28px' : '20px 40px',
+              padding: '24px 48px',
               background: 'white',
-              borderRadius: 16,
+              borderRadius: 20,
               boxShadow: '0 10px 40px rgba(0,0,0,.08)',
-              border: `2px solid ${brand}30`
+              border: `3px solid ${brand}30`
             }}>
               <div style={{
-                fontSize: isMobile ? 14 : 18,
-                color: '#64748b',
-                marginBottom: 8
-              }}>
-                Available to you
-              </div>
-              <div style={{
-                fontSize: isMobile ? 24 : 32,
+                fontSize: 36,
                 fontWeight: 900,
                 color: brand
               }}>
-                24/7 via secure messaging
+                Available 24/7 via Secure Messaging
               </div>
             </div>
           </div>
@@ -122,48 +125,39 @@ export const MeetYourTeam: React.FC<{
   );
 };
 
-const TeamMember: React.FC<{
+const TeamMemberCard: React.FC<{
   name: string;
   role: string;
   description: string;
-  frame: number;
-  delay: number;
   brand: string;
   imageUrl: string;
   highlights: string[];
   isMobile: boolean;
-}> = ({name, role, description, frame, delay, brand, imageUrl, highlights, isMobile}) => {
-  const opacity = interpolate(frame, [delay, delay + 20], [0, 1], {
-    easing: Easing.out(Easing.cubic),
-    extrapolateRight: 'clamp'
-  });
-  
-  const slideY = interpolate(frame, [delay, delay + 25], [40, 0], {
-    easing: Easing.out(Easing.cubic),
-    extrapolateRight: 'clamp'
-  });
-  
+}> = ({name, role, description, brand, imageUrl, highlights, isMobile}) => {
   return (
     <div style={{
-      flex: 1,
-      padding: isMobile ? 32 : 40,
+      maxWidth: 1200,
+      margin: '0 auto',
+      padding: isMobile ? 40 : 60,
       background: 'white',
-      borderRadius: 24,
-      boxShadow: '0 20px 60px rgba(0,0,0,.1)',
-      border: `3px solid ${brand}20`,
-      opacity,
-      transform: `translateY(${slideY}px)`
+      borderRadius: 32,
+      boxShadow: '0 20px 60px rgba(0,0,0,.15)',
+      border: `4px solid ${brand}20`,
+      display: 'flex',
+      flexDirection: isMobile ? 'column' : 'row',
+      alignItems: 'center',
+      gap: isMobile ? 32 : 60
     }}>
-      {/* Real Photo */}
+      {/* Photo */}
       <div style={{
-        width: isMobile ? 140 : 160,
-        height: isMobile ? 140 : 160,
+        width: isMobile ? 180 : 280,
+        height: isMobile ? 180 : 280,
         borderRadius: '50%',
-        margin: '0 auto 24px',
-        border: `4px solid ${brand}`,
-        boxShadow: `0 10px 30px ${brand}30`,
+        border: `6px solid ${brand}`,
+        boxShadow: `0 15px 40px ${brand}40`,
         overflow: 'hidden',
-        background: '#f1f5f9'
+        background: '#f1f5f9',
+        flexShrink: 0
       }}>
         <Img 
           src={imageUrl}
@@ -175,60 +169,66 @@ const TeamMember: React.FC<{
         />
       </div>
       
-      {/* Name & Role */}
-      <div style={{
-        fontSize: isMobile ? 28 : 36,
-        fontWeight: 900,
-        color: '#0f172a',
-        textAlign: 'center',
-        marginBottom: 8,
-        lineHeight: 1.2
-      }}>
-        {name}
-      </div>
-      
-      <div style={{
-        fontSize: isMobile ? 16 : 20,
-        fontWeight: 700,
-        color: brand,
-        textAlign: 'center',
-        marginBottom: 24,
-        lineHeight: 1.3
-      }}>
-        {role}
-      </div>
-      
-      {/* Description */}
-      <div style={{
-        fontSize: isMobile ? 16 : 18,
-        color: '#64748b',
-        textAlign: 'center',
-        lineHeight: 1.6,
-        marginBottom: 28
-      }}>
-        {description}
-      </div>
-      
-      {/* Highlights */}
-      <div style={{
-        background: `${brand}08`,
-        borderRadius: 12,
-        padding: isMobile ? 16 : 20
-      }}>
-        {highlights.map((highlight, i) => (
-          <div key={i} style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 12,
-            marginBottom: i < highlights.length - 1 ? 12 : 0,
-            fontSize: isMobile ? 15 : 16,
-            fontWeight: 600,
-            color: '#1e293b'
-          }}>
-            <span style={{color: brand, fontSize: isMobile ? 18 : 20}}>✓</span>
-            {highlight}
-          </div>
-        ))}
+      {/* Content */}
+      <div style={{flex: 1}}>
+        {/* Name */}
+        <div style={{
+          fontSize: isMobile ? 32 : 56,
+          fontWeight: 900,
+          color: '#0f172a',
+          marginBottom: 12,
+          lineHeight: 1.2
+        }}>
+          {name}
+        </div>
+        
+        {/* Role */}
+        <div style={{
+          fontSize: isMobile ? 20 : 32,
+          fontWeight: 700,
+          color: brand,
+          marginBottom: 24,
+          lineHeight: 1.3
+        }}>
+          {role}
+        </div>
+        
+        {/* Description */}
+        <div style={{
+          fontSize: isMobile ? 18 : 24,
+          color: '#64748b',
+          lineHeight: 1.6,
+          marginBottom: 32
+        }}>
+          {description}
+        </div>
+        
+        {/* Highlights */}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 16
+        }}>
+          {highlights.map((highlight, i) => (
+            <div key={i} style={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: 16,
+              fontSize: isMobile ? 16 : 22,
+              fontWeight: 600,
+              color: '#1e293b',
+              lineHeight: 1.5
+            }}>
+              <span style={{
+                color: brand, 
+                fontSize: isMobile ? 24 : 32,
+                fontWeight: 900,
+                flexShrink: 0
+              }}>✓</span>
+              {highlight}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
