@@ -66,11 +66,20 @@ export const POC_JourneyVideo: React.FC<Props> = ({
   const displayPlan = plan === 'Oral' ? 'Tablet' : plan;
   const pricing = getPricing(couponCode, plan);
 
+  // VOICEOVER TIMING MARKERS (30fps = frames)
+  // 0-8.25s (0-248 frames): Hero Opener
+  // 8.25-16.5s (248-495 frames): Transformation Vision
+  // 16.5-31s (495-930 frames): Meet Your Team
+  // 31-49s (930-1470 frames): Your Journey Timeline
+  // 49-58.5s (1470-1755 frames): Success Stories
+  // 58.5-94s (1755-2820 frames): What Happens Next
+  // 94-100s (2820-3000 frames): Final CTA
+
   return (
     <AbsoluteFill style={{
       fontFamily: 'Inter, -apple-system, system-ui, sans-serif'
     }}>
-      {voiceoverUrl && (
+      {voiceoverUrl && voiceoverUrl !== '' && (
         <Audio src={voiceoverUrl} volume={1.0} />
       )}
       
