@@ -1,27 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <style>
-    body { margin: 0; padding: 0; overflow: hidden; }
-    #root { width: 100%; height: 100vh; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Journey</title>
+  <script src="https://goal-md-v2.vercel.app/remotion.js"></script>
 </head>
-<body>
+<body style="margin: 0; padding: 0; background: #f8f9fa;">
   <div id="root"></div>
-  <script src="/remotion-player.js"></script>
   <script>
+    const root = document.getElementById('root');
+    let currentProps = null;
+
+    // Detect device inside the player
+    const isMobile = window.innerWidth <= 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const compositionId = isMobile ? 'journey-poc' : 'journey-poc-wide';
+
     window.addEventListener('message', (event) => {
       if (event.data.type === 'RENDER_VIDEO') {
-        const { PlayerWrapper, React, ReactDOM } = window.RemotionPlayerModule;
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(React.createElement(PlayerWrapper, event.data.props));
+        currentProps = event.data.props;
+        renderPlayer();
       }
     });
-    
-    if (window.parent !== window) {
-      window.parent.postMessage({ type: 'PLAYER_READY' }, '*');
+
+    function renderPlayer() {
+      if (!currentProps) return;
+
+      window.renderMedia({
+        component: window.POC_JourneyVideo,
+        compositionId: compositionId, // Automatically selects mobile or desktop
+        serveUrl: 'https://goal-md-v2.vercel.app',
+        input: currentProps,
+        container: root,
+      });
     }
+
+    window.parent.postMessage({ type: 'PLAYER_READY' }, '*');
   </script>
 </body>
 </html>
