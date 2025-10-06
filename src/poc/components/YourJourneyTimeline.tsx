@@ -24,13 +24,24 @@ export const YourJourneyTimeline: React.FC<{
   
   const monthsToGoal = Math.ceil(etaToGoal / 4);
   
-  // Generate dynamic months based on actual timeline
-  const numPoints = Math.min(monthsToGoal + 1, 6); // Cap at 6 points for readability
-  const months = Array.from({length: numPoints}, (_, i) => i);
+  // Generate strategic data points - show early months in detail, then skip to end
+  const generateChartMonths = (totalMonths: number) => {
+    if (totalMonths <= 6) {
+      // Show all months if 6 or fewer
+      return Array.from({length: totalMonths + 1}, (_, i) => i);
+    } else {
+      // Show: 0, 1, 2, 3, [midpoint], [final]
+      const midpoint = Math.floor(totalMonths / 2);
+      return [0, 1, 2, 3, midpoint, totalMonths];
+    }
+  };
   
-  // Calculate weight progression using sigmoid curve
-  const weights = months.map(m => {
-    const progress = m / (numPoints - 1); // 0 to 1
+  const chartMonths = generateChartMonths(monthsToGoal);
+  const numPoints = chartMonths.length;
+  
+  // Calculate weight progression using the strategic points
+  const weights = chartMonths.map(m => {
+    const progress = m / monthsToGoal; // 0 to 1
     const x = (progress - 0.5) * 6; // Spread sigmoid curve
     const sigmoidProgress = 1 / (1 + Math.exp(-x));
     return startWeight - (startWeight - goalWeight) * sigmoidProgress;
@@ -53,7 +64,7 @@ export const YourJourneyTimeline: React.FC<{
   const minWeight = Math.floor(Math.min(...weights) / 10) * 10 - 8;
   const weightRange = maxWeight - minWeight;
   
-  const xScale = (index: number) => padding.left + (index / (months.length - 1)) * plotWidth;
+  const xScale = (index: number) => padding.left + (index / (numPoints - 1)) * plotWidth;
   const yScale = (weight: number) => padding.top + ((maxWeight - weight) / weightRange) * plotHeight;
   
   const lineProgress = interpolate(frame, [50, 110], [0, 1], {
@@ -70,10 +81,10 @@ export const YourJourneyTimeline: React.FC<{
   const totalPathLength = plotWidth * 1.5;
   const yTicks = [minWeight, Math.round((minWeight + maxWeight) / 2), maxWeight];
   
-  // Generate X-axis labels dynamically
-  const xLabels = months.map((m, i) => {
-    if (i === 0) return 'Now';
-    if (i === months.length - 1) return `Month ${monthsToGoal}`;
+  // Generate X-axis labels with actual month numbers
+  const xLabels = chartMonths.map((m) => {
+    if (m === 0) return 'Now';
+    if (m === monthsToGoal) return `Month ${monthsToGoal}`;
     return `Month ${m}`;
   });
   
@@ -174,7 +185,7 @@ export const YourJourneyTimeline: React.FC<{
           
           {/* Area */}
           <path
-            d={`${linePath} L ${xScale(months.length - 1)} ${yScale(minWeight)} L ${padding.left} ${yScale(minWeight)} Z`}
+            d={`${linePath} L ${xScale(numPoints - 1)} ${yScale(minWeight)} L ${padding.left} ${yScale(minWeight)} Z`}
             fill="url(#chartGradient)"
             opacity={interpolate(frame, [90, 105], [0, 1], {extrapolateRight: 'clamp'})}
           />
@@ -228,7 +239,7 @@ export const YourJourneyTimeline: React.FC<{
           {frame > 105 && (
             <g opacity={interpolate(frame, [105, 115], [0, 1], {extrapolateRight: 'clamp'})}>
               <rect
-                x={xScale(months.length - 1) - 38}
+                x={xScale(numPoints - 1) - 38}
                 y={yScale(weights[weights.length - 1]) - 42}
                 width={76}
                 height={28}
@@ -236,7 +247,7 @@ export const YourJourneyTimeline: React.FC<{
                 fill={brand}
               />
               <text
-                x={xScale(months.length - 1)}
+                x={xScale(numPoints - 1)}
                 y={yScale(weights[weights.length - 1]) - 23}
                 textAnchor="middle"
                 fill="white"
@@ -250,7 +261,7 @@ export const YourJourneyTimeline: React.FC<{
         </svg>
       </div>
       
-      {/* Benefits - unchanged */}
+      {/* Benefits */}
       {frame > 120 && (
         <div style={{
           background: 'white',
