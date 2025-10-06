@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Journey - Mobile</title>
+  <title>Your Journey</title>
   <script src="https://goal-md-v2.vercel.app/remotion.js"></script>
 </head>
 <body style="margin: 0; padding: 0; background: #f8f9fa;">
@@ -24,14 +24,13 @@
 
       window.renderMedia({
         component: window.POC_JourneyVideo,
-        compositionId: 'journey-poc', // Mobile composition (vertical)
+        compositionId: 'journey-poc', // MOBILE: vertical 1080x1920
         serveUrl: 'https://goal-md-v2.vercel.app',
         input: currentProps,
         container: root,
       });
     }
 
-    // Signal player is ready
     window.parent.postMessage({ type: 'PLAYER_READY' }, '*');
   </script>
 </body>
