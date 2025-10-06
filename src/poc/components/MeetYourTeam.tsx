@@ -33,85 +33,93 @@ export const MeetYourTeam: React.FC<{
       alignItems:'center',
       justifyContent:'center',
       opacity: fadeIn,
-      padding: isMobile ? '60px 40px' : '80px 120px'
+      padding: isMobile ? '40px 20px' : '60px 80px'
     }}>
-      <div style={{maxWidth: 1600, width: '100%', position: 'relative'}}>
+      <div style={{maxWidth: 1600, width: '100%', position: 'relative', height: '100%', display: 'flex', flexDirection: 'column'}}>
         {/* Title - stays throughout */}
         <div style={{
           fontSize: isMobile ? 42 : 72,
           fontWeight: 900,
           color: '#0f172a',
           textAlign: 'center',
-          marginBottom: 64,
+          marginBottom: isMobile ? 32 : 48,
           lineHeight: 1.1
         }}>
           Meet Your Personal Care Team
         </div>
         
-        {/* Dr. Fitch Card */}
+        {/* Cards container - centered vertically */}
         <div style={{
-          position: 'absolute',
-          width: '100%',
-          opacity: drFitchOpacity,
-          transform: `translateX(${drFitchSlide}%)`,
-          pointerEvents: frame > 210 ? 'none' : 'auto'
+          position: 'relative',
+          flex: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
         }}>
-          <TeamMemberCard
-            name="Dr. Michael Fitch"
-            role="Your GOAL.MD Physician"
-            description="Board-certified in weight management. Dr. Fitch personally oversees your treatment from start to finish."
-            brand={brand}
-            imageUrl="https://assets.cdn.filesafe.space/LchNNcx4oSFzaphyXK3t/media/689d01e1d232a3b5c315a965.png"
-            highlights={[
-              'Direct monthly check-ins with your physician',
-              'Personalized dosing for maximum results',
-              'Real medical oversight, not a vending machine'
-            ]}
-            isMobile={isMobile}
-          />
-        </div>
-        
-        {/* Betsy Card */}
-        <div style={{
-          position: 'absolute',
-          width: '100%',
-          opacity: betsyOpacity,
-          transform: `translateX(${betsySlide}%)`,
-          pointerEvents: frame < 240 ? 'none' : 'auto'
-        }}>
-          <TeamMemberCard
-            name="Betsy Moeller"
-            role="Your Nutrition Coach"
-            description="Registered dietitian helping you turn results into lasting success through practical strategies."
-            brand={brand}
-            imageUrl="https://storage.googleapis.com/msgsndr/LchNNcx4oSFzaphyXK3t/media/68b87a79ca12c66425fd793c.png"
-            highlights={[
-              'Custom meal planning for your lifestyle',
-              'Weekly accountability to keep you on track',
-              'Nutrition strategies that prevent plateaus'
-            ]}
-            isMobile={isMobile}
-          />
-        </div>
-        
-        {/* Trust badge at bottom */}
-        {frame > 300 && (
+          {/* Dr. Fitch Card */}
           <div style={{
             position: 'absolute',
-            bottom: -100,
-            left: '50%',
-            transform: 'translateX(-50%)',
+            width: '100%',
+            opacity: drFitchOpacity,
+            transform: `translateX(${drFitchSlide}%)`,
+            pointerEvents: frame > 210 ? 'none' : 'auto'
+          }}>
+            <TeamMemberCard
+              name="Dr. Michael Fitch"
+              role="Your GOAL.MD Physician"
+              description="Board-certified in weight management. Dr. Fitch personally oversees your treatment from start to finish."
+              brand={brand}
+              imageUrl="https://assets.cdn.filesafe.space/LchNNcx4oSFzaphyXK3t/media/689d01e1d232a3b5c315a965.png"
+              highlights={[
+                'Direct monthly check-ins with your physician',
+                'Personalized dosing for maximum results',
+                'Real medical oversight, not a vending machine'
+              ]}
+              isMobile={isMobile}
+            />
+          </div>
+          
+          {/* Betsy Card */}
+          <div style={{
+            position: 'absolute',
+            width: '100%',
+            opacity: betsyOpacity,
+            transform: `translateX(${betsySlide}%)`,
+            pointerEvents: frame < 240 ? 'none' : 'auto'
+          }}>
+            <TeamMemberCard
+              name="Betsy Moeller"
+              role="Your Nutrition Coach"
+              description="Registered dietitian helping you turn results into lasting success through practical strategies."
+              brand={brand}
+              imageUrl="https://storage.googleapis.com/msgsndr/LchNNcx4oSFzaphyXK3t/media/68b87a79ca12c66425fd793c.png"
+              highlights={[
+                'Custom meal planning for your lifestyle',
+                'Weekly accountability to keep you on track',
+                'Nutrition strategies that prevent plateaus'
+              ]}
+              isMobile={isMobile}
+            />
+          </div>
+        </div>
+        
+        {/* Trust badge at bottom - with safe margin */}
+        {frame > 300 && (
+          <div style={{
+            textAlign: 'center',
+            paddingBottom: 20,
             opacity: interpolate(frame, [300, 320], [0, 1], {extrapolateRight: 'clamp'})
           }}>
             <div style={{
-              padding: '24px 48px',
+              display: 'inline-block',
+              padding: isMobile ? '16px 32px' : '20px 40px',
               background: 'white',
-              borderRadius: 20,
+              borderRadius: 16,
               boxShadow: '0 10px 40px rgba(0,0,0,.08)',
               border: `3px solid ${brand}30`
             }}>
               <div style={{
-                fontSize: 36,
+                fontSize: isMobile ? 20 : 32,
                 fontWeight: 900,
                 color: brand
               }}>
@@ -136,24 +144,24 @@ const TeamMemberCard: React.FC<{
 }> = ({name, role, description, brand, imageUrl, highlights, isMobile}) => {
   return (
     <div style={{
-      maxWidth: 1200,
+      maxWidth: isMobile ? '100%' : 1200,
       margin: '0 auto',
-      padding: isMobile ? 40 : 60,
+      padding: isMobile ? 24 : 48,
       background: 'white',
-      borderRadius: 32,
+      borderRadius: 24,
       boxShadow: '0 20px 60px rgba(0,0,0,.15)',
       border: `4px solid ${brand}20`,
       display: 'flex',
       flexDirection: isMobile ? 'column' : 'row',
       alignItems: 'center',
-      gap: isMobile ? 32 : 60
+      gap: isMobile ? 24 : 48
     }}>
       {/* Photo */}
       <div style={{
-        width: isMobile ? 180 : 280,
-        height: isMobile ? 180 : 280,
+        width: isMobile ? 140 : 220,
+        height: isMobile ? 140 : 220,
         borderRadius: '50%',
-        border: `6px solid ${brand}`,
+        border: `5px solid ${brand}`,
         boxShadow: `0 15px 40px ${brand}40`,
         overflow: 'hidden',
         background: '#f1f5f9',
@@ -173,10 +181,10 @@ const TeamMemberCard: React.FC<{
       <div style={{flex: 1}}>
         {/* Name */}
         <div style={{
-          fontSize: isMobile ? 32 : 56,
+          fontSize: isMobile ? 28 : 48,
           fontWeight: 900,
           color: '#0f172a',
-          marginBottom: 12,
+          marginBottom: 8,
           lineHeight: 1.2
         }}>
           {name}
@@ -184,10 +192,10 @@ const TeamMemberCard: React.FC<{
         
         {/* Role */}
         <div style={{
-          fontSize: isMobile ? 20 : 32,
+          fontSize: isMobile ? 18 : 28,
           fontWeight: 700,
           color: brand,
-          marginBottom: 24,
+          marginBottom: 16,
           lineHeight: 1.3
         }}>
           {role}
@@ -195,10 +203,10 @@ const TeamMemberCard: React.FC<{
         
         {/* Description */}
         <div style={{
-          fontSize: isMobile ? 18 : 24,
+          fontSize: isMobile ? 14 : 20,
           color: '#64748b',
-          lineHeight: 1.6,
-          marginBottom: 32
+          lineHeight: 1.5,
+          marginBottom: 20
         }}>
           {description}
         </div>
@@ -207,21 +215,21 @@ const TeamMemberCard: React.FC<{
         <div style={{
           display: 'flex',
           flexDirection: 'column',
-          gap: 16
+          gap: 12
         }}>
           {highlights.map((highlight, i) => (
             <div key={i} style={{
               display: 'flex',
               alignItems: 'flex-start',
-              gap: 16,
-              fontSize: isMobile ? 16 : 22,
+              gap: 12,
+              fontSize: isMobile ? 14 : 20,
               fontWeight: 600,
               color: '#1e293b',
-              lineHeight: 1.5
+              lineHeight: 1.4
             }}>
               <span style={{
                 color: brand, 
-                fontSize: isMobile ? 24 : 32,
+                fontSize: isMobile ? 20 : 28,
                 fontWeight: 900,
                 flexShrink: 0
               }}>✓</span>
