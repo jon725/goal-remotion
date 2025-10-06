@@ -32,14 +32,14 @@ export const TransformationVision: React.FC<{
         padding: isMobile ? '60px 40px' : '0 80px'
       }}>
         <div style={{
-          fontSize: isMobile ? 42 : 48,
+          fontSize: isMobile ? 42 : 64,
           fontWeight: 900,
           color: '#0f172a',
           textAlign: 'center',
           marginBottom: isMobile ? 50 : 60,
           lineHeight: 1.1
         }}>
-        Imagine {Math.abs(weightLoss)} lbs Lighter…
+          Imagine {Math.abs(weightLoss)} lbs Lighter…
         </div>
         
         <div style={{
@@ -49,7 +49,7 @@ export const TransformationVision: React.FC<{
           gap: isMobile ? 30 : 40,
           marginBottom: isMobile ? 50 : 80
         }}>
-          {/* Before - Stacked on mobile */}
+          {/* Before */}
           <div style={{
             width: isMobile ? '100%' : 400,
             padding: isMobile ? 36 : 48,
@@ -77,7 +77,7 @@ export const TransformationVision: React.FC<{
               {startWeight}
             </div>
             <div style={{
-              fontSize: isMobile ? 20 : 24,
+              fontSize: isMobile ? 20 : 28,
               fontWeight: 700,
               color: '#64748b',
               marginBottom: 8
@@ -85,14 +85,14 @@ export const TransformationVision: React.FC<{
               Today
             </div>
             <div style={{
-              fontSize: isMobile ? 15 : 18,
+              fontSize: isMobile ? 15 : 20,
               color: '#94a3b8'
             }}>
               Starting weight
             </div>
           </div>
           
-          {/* Arrow - Rotated for mobile */}
+          {/* Arrow */}
           <div style={{
             fontSize: isMobile ? 48 : 64,
             color: brand,
@@ -131,7 +131,7 @@ export const TransformationVision: React.FC<{
               {frame > 20 ? currentDisplay : goalWeight}
             </div>
             <div style={{
-              fontSize: isMobile ? 20 : 24,
+              fontSize: isMobile ? 20 : 28,
               fontWeight: 700,
               color: brand,
               marginBottom: 8
@@ -139,7 +139,7 @@ export const TransformationVision: React.FC<{
               Your Goal
             </div>
             <div style={{
-              fontSize: isMobile ? 15 : 18,
+              fontSize: isMobile ? 15 : 20,
               color: '#64748b',
               fontWeight: 600,
               lineHeight: 1.4
@@ -149,24 +149,24 @@ export const TransformationVision: React.FC<{
           </div>
         </div>
         
-        {/* Key benefits - Stack on mobile for better readability */}
+        {/* Key benefits */}
         {frame > 60 && (
           <div style={{
-            marginTop: isMobile ? 40 : 80,
+            marginTop: isMobile ? 40 : 60,
             display: 'grid',
             gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
             gap: isMobile ? 20 : 24
           }}>
             {[
-              {text: 'Doctor-Prescribed & Monitored for Safety'},
-              {text: 'Clinically Proven, Real Results'},
-              {text: 'Reduces Food Noise & Cravings'},
-              {text: 'Sustainable Weight Loss & Better Health'}
+              {icon: '💊', text: 'Doctor-Prescribed & Monitored'},
+              {icon: '📊', text: 'Clinically Proven Results'},
+              {icon: '🎯', text: 'Reduces Food Cravings'},
+              {icon: '✨', text: 'Sustainable Weight Loss'}
             ].map((item, i) => (
               <div key={i} style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: isMobile ? 16 : 0,
+                gap: isMobile ? 16 : 12,
                 flexDirection: isMobile ? 'row' : 'column',
                 padding: isMobile ? '20px 24px' : 24,
                 background: 'white',
@@ -177,13 +177,13 @@ export const TransformationVision: React.FC<{
                 transform: `translateY(${interpolate(frame, [60 + i*5, 75 + i*5], [20, 0], {extrapolateRight: 'clamp'})}px)`
               }}>
                 <div style={{
-                  fontSize: isMobile ? 36 : 40,
+                  fontSize: isMobile ? 32 : 36,
                   flexShrink: 0
                 }}>
                   {item.icon}
                 </div>
                 <div style={{
-                  fontSize: isMobile ? 18 : 18,
+                  fontSize: isMobile ? 16 : 18,
                   fontWeight: 700,
                   color: '#1e293b',
                   lineHeight: 1.3
