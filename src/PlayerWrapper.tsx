@@ -10,18 +10,12 @@ const PlayerPropsSchema = z.object({
   currentWeight: z.number(),
   goalWeight: z.number(),
   voiceoverUrl: z.string().optional(),
-  compositionWidth: z.number().optional(),
-  compositionHeight: z.number().optional(),
 });
 
 export const PlayerWrapper = React.memo((props: z.infer<typeof PlayerPropsSchema>) => {
   const playerRef = React.useRef<any>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = React.useState(false);
-
-  // Use provided dimensions or default to wide (desktop)
-  const width = props.compositionWidth || 1920;
-  const height = props.compositionHeight || 1080;
 
   const handlePlayClick = () => {
     if (playerRef.current) {
@@ -62,8 +56,8 @@ export const PlayerWrapper = React.memo((props: z.infer<typeof PlayerPropsSchema
         }}
         durationInFrames={3000}
         fps={30}
-        compositionWidth={width}
-        compositionHeight={height}
+        compositionWidth={1920}
+        compositionHeight={1080}
         controls
         autoPlay={false}
         loop={false}
