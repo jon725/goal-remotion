@@ -12,10 +12,6 @@
     const root = document.getElementById('root');
     let currentProps = null;
 
-    // Detect device inside the player
-    const isMobile = window.innerWidth <= 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const compositionId = isMobile ? 'journey-poc' : 'journey-poc-wide';
-
     window.addEventListener('message', (event) => {
       if (event.data.type === 'RENDER_VIDEO') {
         currentProps = event.data.props;
@@ -28,7 +24,7 @@
 
       window.renderMedia({
         component: window.POC_JourneyVideo,
-        compositionId: compositionId, // Automatically selects mobile or desktop
+        compositionId: 'journey-poc-wide',
         serveUrl: 'https://goal-md-v2.vercel.app',
         input: currentProps,
         container: root,
