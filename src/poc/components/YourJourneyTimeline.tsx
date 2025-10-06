@@ -24,20 +24,17 @@ export const YourJourneyTimeline: React.FC<{
   
   const monthsToGoal = Math.ceil(etaToGoal / 4);
   
-  // Generate evenly-spaced data points (max 6 points for readability)
   const generateChartMonths = (totalMonths: number) => {
     const maxPoints = 6;
     if (totalMonths <= 5) {
-      // Show all months if 5 or fewer
       return Array.from({length: totalMonths + 1}, (_, i) => i);
     } else {
-      // Evenly space points across timeline
       const interval = Math.round(totalMonths / (maxPoints - 1));
       const points = [];
       for (let i = 0; i < maxPoints - 1; i++) {
         points.push(i * interval);
       }
-      points.push(totalMonths); // Always end at goal
+      points.push(totalMonths);
       return points;
     }
   };
@@ -45,23 +42,22 @@ export const YourJourneyTimeline: React.FC<{
   const chartMonths = generateChartMonths(monthsToGoal);
   const numPoints = chartMonths.length;
   
-  // Calculate weight progression using the strategic points
   const weights = chartMonths.map(m => {
-    const progress = m / monthsToGoal; // 0 to 1
-    const x = (progress - 0.5) * 6; // Spread sigmoid curve
+    const progress = m / monthsToGoal;
+    const x = (progress - 0.5) * 6;
     const sigmoidProgress = 1 / (1 + Math.exp(-x));
     return startWeight - (startWeight - goalWeight) * sigmoidProgress;
   });
   
-  // Chart dimensions
-  const chartWidth = isMobile ? width - 80 : Math.min(width - 200, 900);
-  const chartHeight = isMobile ? height * 0.3 : 300;
+  // Bigger chart on mobile
+  const chartWidth = isMobile ? width - 60 : Math.min(width - 200, 900);
+  const chartHeight = isMobile ? 450 : 300; // Much taller on mobile
   
   const padding = { 
     top: 50, 
-    right: isMobile ? 35 : 50, 
-    bottom: 50, 
-    left: isMobile ? 55 : 65 
+    right: isMobile ? 40 : 50, 
+    bottom: 60, 
+    left: isMobile ? 60 : 65 
   };
   const plotWidth = chartWidth - padding.left - padding.right;
   const plotHeight = chartHeight - padding.top - padding.bottom;
@@ -87,21 +83,16 @@ export const YourJourneyTimeline: React.FC<{
   const totalPathLength = plotWidth * 1.5;
   const yTicks = [minWeight, Math.round((minWeight + maxWeight) / 2), maxWeight];
   
-  // Calculate actual dates starting from today
   const today = new Date();
   const getMonthLabel = (monthsFromNow: number) => {
     if (monthsFromNow === 0) return 'Now';
-    
     const futureDate = new Date(today);
     futureDate.setMonth(futureDate.getMonth() + monthsFromNow);
-    
-    // Format as "Mar '25" or "Dec '25"
     const monthName = futureDate.toLocaleDateString('en-US', { month: 'short' });
     const year = futureDate.getFullYear().toString().slice(-2);
     return `${monthName} '${year}`;
   };
   
-  // Generate X-axis labels with dates
   const xLabels = chartMonths.map((m) => getMonthLabel(m));
   
   return (
@@ -111,24 +102,24 @@ export const YourJourneyTimeline: React.FC<{
       display:'flex',
       flexDirection: 'column',
       opacity: fadeIn,
-      padding: isMobile ? '20px 20px' : '30px 80px',
+      padding: isMobile ? '80px 30px 30px' : '30px 80px',
       background: 'linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%)'
     }}>
       {/* Header */}
-      <div style={{textAlign: 'center', marginBottom: isMobile ? 12 : 18}}>
+      <div style={{textAlign: 'center', marginBottom: isMobile ? 40 : 18}}>
         <div style={{
-          fontSize: isMobile ? 38 : 52,
+          fontSize: isMobile ? 56 : 52,
           fontWeight: 900,
           color: '#0f172a',
-          marginBottom: 6,
+          marginBottom: isMobile ? 20 : 6,
           lineHeight: 1
         }}>
           Your Personalized Journey
         </div>
         <div style={{
-          fontSize: isMobile ? 16 : 24,
+          fontSize: isMobile ? 24 : 24,
           color: '#64748b',
-          lineHeight: 1.3
+          lineHeight: 1.4
         }}>
           From <span style={{fontWeight: 700, color: '#1e293b'}}>{startWeight} lbs</span> to{' '}
           <span style={{fontWeight: 700, color: brand}}>{goalWeight} lbs</span> in approximately{' '}
@@ -141,11 +132,10 @@ export const YourJourneyTimeline: React.FC<{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: isMobile ? 15 : 20,
+        marginBottom: isMobile ? 40 : 20,
         opacity: interpolate(frame, [20, 35], [0, 1], {extrapolateRight: 'clamp'})
       }}>
         <svg width={chartWidth} height={chartHeight} style={{display: 'block'}}>
-          {/* Grid */}
           {yTicks.map((weight, i) => (
             <line
               key={i}
@@ -159,7 +149,6 @@ export const YourJourneyTimeline: React.FC<{
             />
           ))}
           
-          {/* Y-axis */}
           {yTicks.map((weight, i) => (
             <text
               key={i}
@@ -167,7 +156,7 @@ export const YourJourneyTimeline: React.FC<{
               y={yScale(weight) + 4}
               textAnchor="end"
               fill="#94a3b8"
-              fontSize={isMobile ? 11 : 13}
+              fontSize={isMobile ? 16 : 13}
               fontWeight={600}
               opacity={interpolate(frame, [25, 35], [0, 1], {extrapolateRight: 'clamp'})}
             >
@@ -175,7 +164,6 @@ export const YourJourneyTimeline: React.FC<{
             </text>
           ))}
           
-          {/* X-axis - with actual dates */}
           {xLabels.map((label, i) => (
             <text
               key={i}
@@ -183,7 +171,7 @@ export const YourJourneyTimeline: React.FC<{
               y={chartHeight - 20}
               textAnchor="middle"
               fill="#64748b"
-              fontSize={isMobile ? 11 : 13}
+              fontSize={isMobile ? 16 : 13}
               fontWeight={600}
               opacity={interpolate(frame, [30 + i * 3, 38 + i * 3], [0, 1], {extrapolateRight: 'clamp'})}
             >
@@ -191,7 +179,6 @@ export const YourJourneyTimeline: React.FC<{
             </text>
           ))}
           
-          {/* Gradient */}
           <defs>
             <linearGradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
               <stop offset="0%" stopColor={brand} stopOpacity={0.18} />
@@ -199,18 +186,16 @@ export const YourJourneyTimeline: React.FC<{
             </linearGradient>
           </defs>
           
-          {/* Area */}
           <path
             d={`${linePath} L ${xScale(numPoints - 1)} ${yScale(minWeight)} L ${padding.left} ${yScale(minWeight)} Z`}
             fill="url(#chartGradient)"
             opacity={interpolate(frame, [90, 105], [0, 1], {extrapolateRight: 'clamp'})}
           />
           
-          {/* Line */}
           <path
             d={linePath}
             stroke={brand}
-            strokeWidth={isMobile ? 3 : 4}
+            strokeWidth={isMobile ? 5 : 4}
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -218,7 +203,6 @@ export const YourJourneyTimeline: React.FC<{
             strokeDashoffset={totalPathLength * (1 - lineProgress)}
           />
           
-          {/* Points */}
           {weights.map((w, i) => {
             const delay = 65 + i * 9;
             const opacity = interpolate(frame, [delay, delay + 9], [0, 1], {extrapolateRight: 'clamp'});
@@ -232,17 +216,17 @@ export const YourJourneyTimeline: React.FC<{
                 <circle
                   cx={xScale(i)}
                   cy={yScale(w)}
-                  r={(isMobile ? 7 : 8) * scale}
+                  r={(isMobile ? 10 : 8) * scale}
                   fill={brand}
                   stroke="white"
-                  strokeWidth={2}
+                  strokeWidth={3}
                 />
                 <text
                   x={xScale(i)}
-                  y={yScale(w) - 16}
+                  y={yScale(w) - (isMobile ? 20 : 16)}
                   textAnchor="middle"
                   fill="#1e293b"
-                  fontSize={isMobile ? 14 : 16}
+                  fontSize={isMobile ? 20 : 16}
                   fontWeight={800}
                 >
                   {Math.round(w)}
@@ -251,23 +235,22 @@ export const YourJourneyTimeline: React.FC<{
             );
           })}
           
-          {/* Goal badge */}
           {frame > 105 && (
             <g opacity={interpolate(frame, [105, 115], [0, 1], {extrapolateRight: 'clamp'})}>
               <rect
-                x={xScale(numPoints - 1) - 38}
-                y={yScale(weights[weights.length - 1]) - 42}
-                width={76}
-                height={28}
+                x={xScale(numPoints - 1) - (isMobile ? 45 : 38)}
+                y={yScale(weights[weights.length - 1]) - (isMobile ? 50 : 42)}
+                width={isMobile ? 90 : 76}
+                height={isMobile ? 36 : 28}
                 rx={14}
                 fill={brand}
               />
               <text
                 x={xScale(numPoints - 1)}
-                y={yScale(weights[weights.length - 1]) - 23}
+                y={yScale(weights[weights.length - 1]) - (isMobile ? 27 : 23)}
                 textAnchor="middle"
                 fill="white"
-                fontSize={isMobile ? 12 : 13}
+                fontSize={isMobile ? 18 : 13}
                 fontWeight={700}
               >
                 GOAL
@@ -277,12 +260,12 @@ export const YourJourneyTimeline: React.FC<{
         </svg>
       </div>
       
-      {/* Benefits */}
+      {/* Benefits - Simplified for mobile */}
       {frame > 120 && (
         <div style={{
           background: 'white',
-          borderRadius: isMobile ? 16 : 20,
-          padding: isMobile ? '32px 28px' : '40px 50px',
+          borderRadius: isMobile ? 20 : 20,
+          padding: isMobile ? '40px 30px' : '40px 50px',
           boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
           opacity: interpolate(frame, [120, 135], [0, 1], {extrapolateRight: 'clamp'}),
           flex: '1 1 auto',
@@ -291,33 +274,30 @@ export const YourJourneyTimeline: React.FC<{
           justifyContent: 'center'
         }}>
           <div style={{
-            fontSize: isMobile ? 34 : 42,
+            fontSize: isMobile ? 48 : 42,
             fontWeight: 900,
             color: '#0f172a',
-            marginBottom: isMobile ? 28 : 38,
+            marginBottom: isMobile ? 40 : 38,
             textAlign: 'center',
             lineHeight: 1.1
           }}>
-            What's Included in Your Journey
+            What's Included
           </div>
           
           <div style={{
             display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)',
-            gap: isMobile ? 20 : 28,
-            rowGap: isMobile ? 18 : 24
+            gridTemplateColumns: '1fr',
+            gap: isMobile ? 24 : 28
           }}>
             {[
-              {title: 'GLP-1 Medication', desc: 'Physician-prescribed, delivered directly to your door.'},
-              {title: 'Real Medical Care', desc: 'Not a marketing company — a true medical practice with board-certified physicians.'},
-              {title: 'Unlimited Access to Your Team', desc: 'Call, text, email, or video conference anytime — not just email like other companies.'},
-              {title: 'Nutrition Coaching', desc: 'Weekly support from Betsy to maximize results and prevent plateaus.'},
-              {title: 'Progress Reports', desc: 'Celebrate your wins and see measurable success along the way.'},
-              {title: 'Trusted & Accredited', desc: 'BBB Accredited, A+ Rated — patient-proven and nationally recognized.'}
+              {title: 'GLP-1 Medication', desc: 'Physician-prescribed, delivered to your door.'},
+              {title: 'Real Medical Care', desc: 'Board-certified physicians, not a marketing company.'},
+              {title: 'Unlimited Team Access', desc: 'Call, text, email, or video anytime.'},
+              {title: 'Nutrition Coaching', desc: 'Weekly support to maximize results.'}
             ].map((item, i) => (
               <div key={i} style={{
                 background: 'linear-gradient(to right, #f8fafc 0%, #ffffff 100%)',
-                padding: isMobile ? '18px 20px' : '22px 26px',
+                padding: isMobile ? '28px 24px' : '22px 26px',
                 borderRadius: 12,
                 borderLeft: `4px solid ${brand}`,
                 boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
@@ -325,16 +305,16 @@ export const YourJourneyTimeline: React.FC<{
                 transform: `translateX(${interpolate(frame, [130 + i*3, 140 + i*3], [-20, 0], {extrapolateRight: 'clamp'})}px)`
               }}>
                 <div style={{
-                  fontSize: isMobile ? 20 : 22,
+                  fontSize: isMobile ? 28 : 22,
                   fontWeight: 700,
                   color: '#1e293b',
-                  marginBottom: 8,
+                  marginBottom: 10,
                   lineHeight: 1.25
                 }}>
                   {item.title}
                 </div>
                 <div style={{
-                  fontSize: isMobile ? 16 : 17,
+                  fontSize: isMobile ? 22 : 17,
                   color: '#64748b',
                   lineHeight: 1.5
                 }}>

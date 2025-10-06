@@ -6,7 +6,8 @@ export const HeroOpener: React.FC<{
   frame: number;
   brand: string;
 }> = ({name, frame, brand}) => {
-  const {fps} = useVideoConfig();
+  const {fps, width, height} = useVideoConfig();
+  const isMobile = height > width;
   
   const fadeIn = interpolate(frame, [0, 30], [0, 1], {
     easing: Easing.out(Easing.cubic),
@@ -27,15 +28,17 @@ export const HeroOpener: React.FC<{
       display:'flex',
       flexDirection:'column',
       alignItems:'center',
-      justifyContent:'center',
+      justifyContent: isMobile ? 'flex-start' : 'center',
+      paddingTop: isMobile ? '200px' : 0,
+      padding: isMobile ? '200px 60px 60px' : '0 80px',
       opacity: fadeIn,
       transform: `translateY(${slideUp}px)`
     }}>
       <div style={{
-        fontSize: 40, // Increased from 28
+        fontSize: isMobile ? 52 : 40,
         fontWeight: 600,
         color: '#64748b',
-        marginBottom: 32,
+        marginBottom: isMobile ? 48 : 32,
         letterSpacing: 3,
         textTransform: 'uppercase'
       }}>
@@ -43,12 +46,12 @@ export const HeroOpener: React.FC<{
       </div>
       
       <div style={{
-        fontSize: 120, // Increased from 92
+        fontSize: isMobile ? 140 : 120,
         fontWeight: 900,
         color: '#0f172a',
         textAlign: 'center',
         lineHeight: 1.1,
-        marginBottom: 40,
+        marginBottom: isMobile ? 60 : 40,
         background: `linear-gradient(135deg, #0f172a 0%, ${brand} 100%)`,
         WebkitBackgroundClip: 'text',
         backgroundClip: 'text',
@@ -58,13 +61,13 @@ export const HeroOpener: React.FC<{
       </div>
       
       <div style={{
-        fontSize: 44, // Increased from 32
+        fontSize: isMobile ? 56 : 44,
         fontWeight: 500,
         color: '#475569',
         textAlign: 'center',
-        maxWidth: 1200, // Increased from 900
+        maxWidth: isMobile ? '100%' : 1200,
         lineHeight: 1.6,
-        marginBottom: 48,
+        marginBottom: isMobile ? 80 : 48,
         transform: `scale(${scaleIn})`,
         opacity: frame > 20 ? 1 : 0
       }}>
@@ -76,13 +79,13 @@ export const HeroOpener: React.FC<{
       
       {frame > 40 && (
         <div style={{
-          padding: '20px 40px', // Increased padding
+          padding: isMobile ? '28px 48px' : '20px 40px',
           background: `${brand}15`,
           border: `2px solid ${brand}40`,
           borderRadius: 16,
           color: brand,
           fontWeight: 700,
-          fontSize: 28, // Increased from 20
+          fontSize: isMobile ? 36 : 28,
           animation: 'pulse 2s ease-in-out infinite'
         }}>
           ✨ Your transformation starts here

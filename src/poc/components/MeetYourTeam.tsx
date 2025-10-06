@@ -9,9 +9,6 @@ export const MeetYourTeam: React.FC<{
   const isMobile = height > width;
   const fadeIn = interpolate(frame, [0, 20], [0, 1], {extrapolateRight: 'clamp'});
   
-  // Dr. Fitch shows from frame 0-210
-  // Transition happens 210-240
-  // Betsy shows from 240+
   const drFitchOpacity = interpolate(frame, [0, 20, 210, 240], [0, 1, 1, 0], {extrapolateRight: 'clamp'});
   const betsyOpacity = interpolate(frame, [210, 240], [0, 1], {extrapolateRight: 'clamp'});
   
@@ -30,28 +27,28 @@ export const MeetYourTeam: React.FC<{
       position:'absolute',
       inset:0,
       display:'flex',
-      alignItems:'center',
+      alignItems: isMobile ? 'flex-start' : 'center',
       justifyContent:'center',
       opacity: fadeIn,
-      padding: isMobile ? '40px 20px' : '60px 80px'
+      padding: isMobile ? '100px 30px 40px' : '60px 80px'
     }}>
-      <div style={{maxWidth: 1600, width: '100%', position: 'relative', height: '100%', display: 'flex', flexDirection: 'column'}}>
-        {/* Title - stays throughout */}
+      <div style={{maxWidth: 1600, width: '100%', position: 'relative', height: isMobile ? 'auto' : '100%', display: 'flex', flexDirection: 'column'}}>
+        {/* Title */}
         <div style={{
-          fontSize: isMobile ? 42 : 72,
+          fontSize: isMobile ? 60 : 72,
           fontWeight: 900,
           color: '#0f172a',
           textAlign: 'center',
-          marginBottom: isMobile ? 32 : 48,
+          marginBottom: isMobile ? 60 : 48,
           lineHeight: 1.1
         }}>
           Meet Your Personal Care Team
         </div>
         
-        {/* Cards container - centered vertically */}
+        {/* Cards container */}
         <div style={{
           position: 'relative',
-          flex: 1,
+          flex: isMobile ? 0 : 1,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center'
@@ -67,13 +64,13 @@ export const MeetYourTeam: React.FC<{
             <TeamMemberCard
               name="Dr. Michael Fitch"
               role="Your GOAL.MD Physician"
-              description="Board-certified in weight management. Dr. Fitch personally oversees your treatment from start to finish."
+              description="Board-certified in weight management. Dr. Fitch personally oversees your treatment."
               brand={brand}
               imageUrl="https://assets.cdn.filesafe.space/LchNNcx4oSFzaphyXK3t/media/689d01e1d232a3b5c315a965.png"
               highlights={[
-                'Direct monthly check-ins with your physician',
-                'Personalized dosing for maximum results',
-                'Real medical oversight, not a vending machine'
+                'Monthly check-ins',
+                'Personalized dosing',
+                'Real medical oversight'
               ]}
               isMobile={isMobile}
             />
@@ -90,36 +87,37 @@ export const MeetYourTeam: React.FC<{
             <TeamMemberCard
               name="Betsy Moeller"
               role="Your Nutrition Coach"
-              description="Registered dietitian helping you turn results into lasting success through practical strategies."
+              description="Registered dietitian helping you achieve lasting success."
               brand={brand}
               imageUrl="https://storage.googleapis.com/msgsndr/LchNNcx4oSFzaphyXK3t/media/68b87a79ca12c66425fd793c.png"
               highlights={[
-                'Custom meal planning for your lifestyle',
-                'Weekly accountability to keep you on track',
-                'Nutrition strategies that prevent plateaus'
+                'Custom meal planning',
+                'Weekly accountability',
+                'Prevent plateaus'
               ]}
               isMobile={isMobile}
             />
           </div>
         </div>
         
-        {/* Trust badge at bottom - with safe margin */}
+        {/* Trust badge */}
         {frame > 300 && (
           <div style={{
             textAlign: 'center',
             paddingBottom: 20,
+            marginTop: isMobile ? 80 : 0,
             opacity: interpolate(frame, [300, 320], [0, 1], {extrapolateRight: 'clamp'})
           }}>
             <div style={{
               display: 'inline-block',
-              padding: isMobile ? '16px 32px' : '20px 40px',
+              padding: isMobile ? '24px 40px' : '20px 40px',
               background: 'white',
               borderRadius: 16,
               boxShadow: '0 10px 40px rgba(0,0,0,.08)',
               border: `3px solid ${brand}30`
             }}>
               <div style={{
-                fontSize: isMobile ? 20 : 32,
+                fontSize: isMobile ? 32 : 32,
                 fontWeight: 900,
                 color: brand
               }}>
@@ -146,20 +144,20 @@ const TeamMemberCard: React.FC<{
     <div style={{
       maxWidth: isMobile ? '100%' : 1200,
       margin: '0 auto',
-      padding: isMobile ? 24 : 48,
+      padding: isMobile ? 40 : 48,
       background: 'white',
       borderRadius: 24,
       boxShadow: '0 20px 60px rgba(0,0,0,.15)',
       border: `4px solid ${brand}20`,
       display: 'flex',
-      flexDirection: isMobile ? 'column' : 'row',
+      flexDirection: 'column',
       alignItems: 'center',
-      gap: isMobile ? 24 : 48
+      gap: isMobile ? 32 : 48
     }}>
       {/* Photo */}
       <div style={{
-        width: isMobile ? 140 : 220,
-        height: isMobile ? 140 : 220,
+        width: isMobile ? 200 : 220,
+        height: isMobile ? 200 : 220,
         borderRadius: '50%',
         border: `5px solid ${brand}`,
         boxShadow: `0 15px 40px ${brand}40`,
@@ -178,13 +176,13 @@ const TeamMemberCard: React.FC<{
       </div>
       
       {/* Content */}
-      <div style={{flex: 1}}>
+      <div style={{flex: 1, textAlign: 'center'}}>
         {/* Name */}
         <div style={{
-          fontSize: isMobile ? 28 : 48,
+          fontSize: isMobile ? 48 : 48,
           fontWeight: 900,
           color: '#0f172a',
-          marginBottom: 8,
+          marginBottom: 12,
           lineHeight: 1.2
         }}>
           {name}
@@ -192,10 +190,10 @@ const TeamMemberCard: React.FC<{
         
         {/* Role */}
         <div style={{
-          fontSize: isMobile ? 18 : 28,
+          fontSize: isMobile ? 28 : 28,
           fontWeight: 700,
           color: brand,
-          marginBottom: 16,
+          marginBottom: 24,
           lineHeight: 1.3
         }}>
           {role}
@@ -203,10 +201,10 @@ const TeamMemberCard: React.FC<{
         
         {/* Description */}
         <div style={{
-          fontSize: isMobile ? 14 : 20,
+          fontSize: isMobile ? 24 : 20,
           color: '#64748b',
           lineHeight: 1.5,
-          marginBottom: 20
+          marginBottom: 32
         }}>
           {description}
         </div>
@@ -215,21 +213,22 @@ const TeamMemberCard: React.FC<{
         <div style={{
           display: 'flex',
           flexDirection: 'column',
-          gap: 12
+          gap: 20,
+          alignItems: 'center'
         }}>
           {highlights.map((highlight, i) => (
             <div key={i} style={{
               display: 'flex',
-              alignItems: 'flex-start',
-              gap: 12,
-              fontSize: isMobile ? 14 : 20,
+              alignItems: 'center',
+              gap: 16,
+              fontSize: isMobile ? 26 : 20,
               fontWeight: 600,
               color: '#1e293b',
               lineHeight: 1.4
             }}>
               <span style={{
                 color: brand, 
-                fontSize: isMobile ? 20 : 28,
+                fontSize: isMobile ? 32 : 28,
                 fontWeight: 900,
                 flexShrink: 0
               }}>✓</span>
