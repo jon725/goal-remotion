@@ -11,34 +11,30 @@
   <div id="root"></div>
   <script src="/remotion-player.js"></script>
   <script>
-
-
-
-
-
-
+    // Detect mobile and set composition dimensions
+    const isMobile = window.innerWidth <= 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const compositionWidth = isMobile ? 1080 : 1920;
+    const compositionHeight = isMobile ? 1920 : 1080;
 
     window.addEventListener('message', (event) => {
       if (event.data.type === 'RENDER_VIDEO') {
         const { PlayerWrapper, React, ReactDOM } = window.RemotionPlayerModule;
         const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(React.createElement(PlayerWrapper, event.data.props));
+        
+        // Add dimensions to props
+        const propsWithDimensions = {
+          ...event.data.props,
+          compositionWidth: compositionWidth,
+          compositionHeight: compositionHeight
+        };
+        
+        root.render(React.createElement(PlayerWrapper, propsWithDimensions));
       }
     });
     
     if (window.parent !== window) {
       window.parent.postMessage({ type: 'PLAYER_READY' }, '*');
-
-
-
-
-
-
-
-
     }
-
-
   </script>
 </body>
 </html>
