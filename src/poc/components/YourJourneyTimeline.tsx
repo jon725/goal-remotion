@@ -24,14 +24,19 @@ export const YourJourneyTimeline: React.FC<{
   
   const monthsToGoal = Math.ceil(etaToGoal / 4);
   
-  // Calculate weight progression
-  const months = [0, 1, 2, 3, 4];
+  // Generate dynamic months based on actual timeline
+  const numPoints = Math.min(monthsToGoal + 1, 6); // Cap at 6 points for readability
+  const months = Array.from({length: numPoints}, (_, i) => i);
+  
+  // Calculate weight progression using sigmoid curve
   const weights = months.map(m => {
-    const x = m - 2;
-    return startWeight - (startWeight - goalWeight) * (1 / (1 + Math.exp(-1.2 * x)));
+    const progress = m / (numPoints - 1); // 0 to 1
+    const x = (progress - 0.5) * 6; // Spread sigmoid curve
+    const sigmoidProgress = 1 / (1 + Math.exp(-x));
+    return startWeight - (startWeight - goalWeight) * sigmoidProgress;
   });
   
-  // Smaller chart
+  // Chart dimensions
   const chartWidth = isMobile ? width - 80 : Math.min(width - 200, 900);
   const chartHeight = isMobile ? height * 0.3 : 300;
   
@@ -65,6 +70,13 @@ export const YourJourneyTimeline: React.FC<{
   const totalPathLength = plotWidth * 1.5;
   const yTicks = [minWeight, Math.round((minWeight + maxWeight) / 2), maxWeight];
   
+  // Generate X-axis labels dynamically
+  const xLabels = months.map((m, i) => {
+    if (i === 0) return 'Now';
+    if (i === months.length - 1) return `Month ${monthsToGoal}`;
+    return `Month ${m}`;
+  });
+  
   return (
     <div style={{
       position:'absolute',
@@ -97,7 +109,7 @@ export const YourJourneyTimeline: React.FC<{
         </div>
       </div>
       
-      {/* Chart - Fixed animation order */}
+      {/* Chart */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
@@ -120,7 +132,7 @@ export const YourJourneyTimeline: React.FC<{
             />
           ))}
           
-          {/* Y-axis - appears first */}
+          {/* Y-axis */}
           {yTicks.map((weight, i) => (
             <text
               key={i}
@@ -136,8 +148,8 @@ export const YourJourneyTimeline: React.FC<{
             </text>
           ))}
           
-          {/* X-axis - appears after Y-axis */}
-          {['Now', 'Month 1', 'Month 2', 'Month 3', 'Month 4'].map((label, i) => (
+          {/* X-axis - dynamic labels */}
+          {xLabels.map((label, i) => (
             <text
               key={i}
               x={xScale(i)}
@@ -160,14 +172,14 @@ export const YourJourneyTimeline: React.FC<{
             </linearGradient>
           </defs>
           
-          {/* Area - after line */}
+          {/* Area */}
           <path
-            d={`${linePath} L ${xScale(4)} ${yScale(minWeight)} L ${padding.left} ${yScale(minWeight)} Z`}
+            d={`${linePath} L ${xScale(months.length - 1)} ${yScale(minWeight)} L ${padding.left} ${yScale(minWeight)} Z`}
             fill="url(#chartGradient)"
             opacity={interpolate(frame, [90, 105], [0, 1], {extrapolateRight: 'clamp'})}
           />
           
-          {/* Line - after axes */}
+          {/* Line */}
           <path
             d={linePath}
             stroke={brand}
@@ -179,7 +191,7 @@ export const YourJourneyTimeline: React.FC<{
             strokeDashoffset={totalPathLength * (1 - lineProgress)}
           />
           
-          {/* Points - with the line */}
+          {/* Points */}
           {weights.map((w, i) => {
             const delay = 65 + i * 9;
             const opacity = interpolate(frame, [delay, delay + 9], [0, 1], {extrapolateRight: 'clamp'});
@@ -212,20 +224,20 @@ export const YourJourneyTimeline: React.FC<{
             );
           })}
           
-          {/* Goal - at the end */}
+          {/* Goal badge */}
           {frame > 105 && (
             <g opacity={interpolate(frame, [105, 115], [0, 1], {extrapolateRight: 'clamp'})}>
               <rect
-                x={xScale(4) - 38}
-                y={yScale(weights[4]) - 42}
+                x={xScale(months.length - 1) - 38}
+                y={yScale(weights[weights.length - 1]) - 42}
                 width={76}
                 height={28}
                 rx={14}
                 fill={brand}
               />
               <text
-                x={xScale(4)}
-                y={yScale(weights[4]) - 23}
+                x={xScale(months.length - 1)}
+                y={yScale(weights[weights.length - 1]) - 23}
                 textAnchor="middle"
                 fill="white"
                 fontSize={isMobile ? 12 : 13}
@@ -238,7 +250,7 @@ export const YourJourneyTimeline: React.FC<{
         </svg>
       </div>
       
-      {/* Benefits - Card design with accent bars */}
+      {/* Benefits - unchanged */}
       {frame > 120 && (
         <div style={{
           background: 'white',
