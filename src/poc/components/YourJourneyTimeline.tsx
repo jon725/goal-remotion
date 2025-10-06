@@ -24,15 +24,21 @@ export const YourJourneyTimeline: React.FC<{
   
   const monthsToGoal = Math.ceil(etaToGoal / 4);
   
-  // Generate strategic data points - show early months in detail, then skip to end
+  // Generate evenly-spaced data points (max 6 points for readability)
   const generateChartMonths = (totalMonths: number) => {
-    if (totalMonths <= 6) {
-      // Show all months if 6 or fewer
+    const maxPoints = 6;
+    if (totalMonths <= 5) {
+      // Show all months if 5 or fewer
       return Array.from({length: totalMonths + 1}, (_, i) => i);
     } else {
-      // Show: 0, 1, 2, 3, [midpoint], [final]
-      const midpoint = Math.floor(totalMonths / 2);
-      return [0, 1, 2, 3, midpoint, totalMonths];
+      // Evenly space points across timeline
+      const interval = Math.round(totalMonths / (maxPoints - 1));
+      const points = [];
+      for (let i = 0; i < maxPoints - 1; i++) {
+        points.push(i * interval);
+      }
+      points.push(totalMonths); // Always end at goal
+      return points;
     }
   };
   
@@ -81,12 +87,22 @@ export const YourJourneyTimeline: React.FC<{
   const totalPathLength = plotWidth * 1.5;
   const yTicks = [minWeight, Math.round((minWeight + maxWeight) / 2), maxWeight];
   
-  // Generate X-axis labels with actual month numbers
-  const xLabels = chartMonths.map((m) => {
-    if (m === 0) return 'Now';
-    if (m === monthsToGoal) return `Month ${monthsToGoal}`;
-    return `Month ${m}`;
-  });
+  // Calculate actual dates starting from today
+  const today = new Date();
+  const getMonthLabel = (monthsFromNow: number) => {
+    if (monthsFromNow === 0) return 'Now';
+    
+    const futureDate = new Date(today);
+    futureDate.setMonth(futureDate.getMonth() + monthsFromNow);
+    
+    // Format as "Mar '25" or "Dec '25"
+    const monthName = futureDate.toLocaleDateString('en-US', { month: 'short' });
+    const year = futureDate.getFullYear().toString().slice(-2);
+    return `${monthName} '${year}`;
+  };
+  
+  // Generate X-axis labels with dates
+  const xLabels = chartMonths.map((m) => getMonthLabel(m));
   
   return (
     <div style={{
@@ -159,7 +175,7 @@ export const YourJourneyTimeline: React.FC<{
             </text>
           ))}
           
-          {/* X-axis - dynamic labels */}
+          {/* X-axis - with actual dates */}
           {xLabels.map((label, i) => (
             <text
               key={i}
