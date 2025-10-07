@@ -71,7 +71,7 @@ export const PlayerWrapper = React.memo((props: z.infer<typeof PlayerPropsSchema
         clickToPlay={false}
         spaceKeyToPlayOrPause={true}
         moveToBeginningWhenEnded={false}
-        initialFrame={150}
+        initialFrame={60}
         style={{ 
           width: '100%', 
           height: '100%',
