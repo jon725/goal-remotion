@@ -59,9 +59,9 @@ function generateScript(name, currentWeight, goalWeight) {
   const weeksToGoal = weightLoss / 1.5; // Assuming 1.5 lbs/week
   const monthsToGoal = Math.ceil(weeksToGoal / 4);
   
-  return `<break time="5.5s"/>
+  return `<break time="7.5s"/>
 
-Imagine yourself six months from now, 35 pounds lighter, healthier, happier, living the life you deserve. 
+Imagine yourself ${monthsToGoal} months from now, ${weightLoss} pounds lighter, healthier, happier, living the life you deserve. 
 
 Picture going from ${currentWeight} pounds to ${goalWeight} pounds. That transformation? It's closer than you think. 
 
