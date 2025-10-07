@@ -84,7 +84,7 @@ Your transformation begins right now. Start your treatment plan today.
 
 async function generateElevenLabsAudio(text) {
   const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
-  const VOICE_ID = process.env.ELEVENLABS_VOICE_ID || 'EXAVITQu4vr4xnSDxMaL'; // Default: Bella
+  const VOICE_ID = process.env.ELEVENLABS_VOICE_ID || 'EXAVITQu4vr4xnSDxMaL';
 
   if (!ELEVENLABS_API_KEY) {
     throw new Error('ELEVENLABS_API_KEY not configured');
@@ -101,7 +101,7 @@ async function generateElevenLabsAudio(text) {
       },
       body: JSON.stringify({
         text: text,
-        model_id: 'eleven_monolingual_v1',
+        model_id: 'eleven_turbo_v2_5', // This model supports SSML
         voice_settings: {
           stability: 0.5,
           similarity_boost: 0.75,
