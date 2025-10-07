@@ -13,9 +13,14 @@ export async function generatePersonalizedVoiceover(
   plan: string
 ) {
   const weightLoss = startWeight - goalWeight;
-  const monthsToGoal = Math.ceil(weightLoss / 1.5 / 4);
+  
+  // Use the same calculation as YourJourneyTimeline component
+  const weeksToGoal = weightLoss / 1.5; // Assuming 1.5 lbs/week
+  const monthsToGoal = Math.ceil(weeksToGoal / 4);
 
-  const script = `
+  const script = 
+  `  <break time="2.5s"/>
+
   Imagine yourself six months from now. ${weightLoss} pounds lighter. Healthier, happier, living the life you deserve.
   
   Picture the life you imagined. ${startWeight} pounds to ${goalWeight} pounds. That transformation? It's closer than you think.
@@ -32,27 +37,23 @@ export async function generatePersonalizedVoiceover(
   `.trim();
 
   try {
-    // Generate audio
     const audio = await client.generate({
-      voice: "Rachel", // Professional, warm female voice
+      voice: "Rachel",
       text: script,
       model_id: "eleven_multilingual_v2"
     });
 
-    // Convert stream to buffer
     const chunks: Buffer[] = [];
     for await (const chunk of audio) {
       chunks.push(chunk);
     }
     const audioBuffer = Buffer.concat(chunks);
 
-    // Save to public folder (for testing)
     const fileName = `voiceover-${name}-${Date.now()}.mp3`;
     const filePath = path.join(process.cwd(), 'public', 'voiceovers', fileName);
     
     await writeFile(filePath, audioBuffer);
 
-    // Return public URL
     return `/voiceovers/${fileName}`;
   } catch (error) {
     console.error('ElevenLabs generation failed:', error);
