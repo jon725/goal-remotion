@@ -54,7 +54,10 @@ export default async function handler(req, res) {
 
 function generateScript(name, currentWeight, goalWeight) {
   const weightLoss = currentWeight - goalWeight;
-  const monthsToGoal = Math.ceil(weightLoss / 1.5 / 4);
+  
+  // Use the same calculation as YourJourneyTimeline component
+  const weeksToGoal = weightLoss / 1.5; // Assuming 1.5 lbs/week
+  const monthsToGoal = Math.ceil(weeksToGoal / 4);
   
   return `
 
@@ -64,7 +67,7 @@ Picture going from ${currentWeight} pounds to ${goalWeight} pounds. That transfo
 
 You won't do this alone. Meet Dr. Michael Fitch, your board-certified physician, and Betsy Moeller, your nutritional coach. Real experts dedicated to your success. 
 
-Your personalised journey, ${currentWeight} pounds to ${goalWeight} in approximately six months. Your medication delivered monthly. 
+Your personalised journey, ${currentWeight} pounds to ${goalWeight} in approximately ${monthsToGoal} months. Your medication delivered monthly. 
 
 Regular check-ins with Dr Fitch. Weekly support from Betsy. Unlimited messaging. Everything you need. 
 
