@@ -19,7 +19,6 @@ export const PlayerWrapper = React.memo((props: z.infer<typeof PlayerPropsSchema
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = React.useState(false);
 
-  // Use provided dimensions or default to desktop (1920x1080)
   const width = props.compositionWidth || 1920;
   const height = props.compositionHeight || 1080;
 
@@ -46,6 +45,12 @@ export const PlayerWrapper = React.memo((props: z.infer<typeof PlayerPropsSchema
       if (document.exitFullscreen) {
         document.exitFullscreen();
       }
+    }
+  };
+
+  const handleCTAClick = () => {
+    if (window.parent !== window) {
+      window.parent.postMessage({ type: 'SCROLL_TO_PAYMENT' }, '*');
     }
   };
 
@@ -130,6 +135,38 @@ export const PlayerWrapper = React.memo((props: z.infer<typeof PlayerPropsSchema
         <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
           <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
         </svg>
+      </button>
+
+      {/* CTA Button */}
+      <button
+        onClick={handleCTAClick}
+        style={{
+          position: 'absolute',
+          bottom: '15px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          background: '#F26622',
+          border: 'none',
+          borderRadius: '8px',
+          padding: '14px 32px',
+          cursor: 'pointer',
+          color: 'white',
+          fontSize: '16px',
+          fontWeight: '700',
+          zIndex: 100,
+          boxShadow: '0 4px 12px rgba(242, 102, 34, 0.4)',
+          transition: 'all 0.2s ease',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.background = '#d44f1b';
+          e.currentTarget.style.transform = 'translateX(-50%) scale(1.05)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.background = '#F26622';
+          e.currentTarget.style.transform = 'translateX(-50%) scale(1)';
+        }}
+      >
+        Start Treatment Now
       </button>
       
       {/* Big Play Button Overlay */}
