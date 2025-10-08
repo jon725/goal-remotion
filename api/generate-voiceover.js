@@ -72,7 +72,7 @@ Your personalised journey, ${currentWeight} pounds to ${goalWeight} in approxima
 Regular check-ins with Dr Fitch. Weekly support from Betsy. Unlimited messaging. Everything you need. 
 
 Thousands of people are already transforming their lives with GoalMD. This isn't a gimmick. These are real, lasting results. 
-
+<break time="4.0s"/>
 So, what's next? You'll select your preferred treatment and book your appointment. This choice is provisional. Dr Fitch makes the final call. During your online consultation, he reviews your medical history and goals, then creates your personalised plan.
 
 He may adjust your medication based on his clinical expertise. That's what sets us apart. Real medical oversight, not a vending machine. If you're not approved, you receive a full refund. Once approved, your medication arrives in five to seven days. 
