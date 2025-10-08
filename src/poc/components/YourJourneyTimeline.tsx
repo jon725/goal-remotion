@@ -49,9 +49,8 @@ export const YourJourneyTimeline: React.FC<{
     return startWeight - (startWeight - goalWeight) * sigmoidProgress;
   });
   
-  // Bigger chart on mobile
   const chartWidth = isMobile ? width - 60 : Math.min(width - 200, 900);
-  const chartHeight = isMobile ? 450 : 300; // Much taller on mobile
+  const chartHeight = isMobile ? 450 : 240; // Reduced from 300 to 240 on desktop
   
   const padding = { 
     top: 50, 
@@ -102,22 +101,22 @@ export const YourJourneyTimeline: React.FC<{
       display:'flex',
       flexDirection: 'column',
       opacity: fadeIn,
-      padding: isMobile ? '80px 30px 30px' : '30px 80px',
+      padding: isMobile ? '80px 30px 30px' : '20px 80px', // Reduced from 30px to 20px on desktop
       background: 'linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%)'
     }}>
       {/* Header */}
-      <div style={{textAlign: 'center', marginBottom: isMobile ? 40 : 18}}>
+      <div style={{textAlign: 'center', marginBottom: isMobile ? 40 : 10}}> {/* Reduced from 18 to 10 */}
         <div style={{
-          fontSize: isMobile ? 56 : 52,
+          fontSize: isMobile ? 56 : 46, // Reduced from 52 to 46
           fontWeight: 900,
           color: '#0f172a',
-          marginBottom: isMobile ? 20 : 6,
+          marginBottom: isMobile ? 20 : 4, // Reduced from 6 to 4
           lineHeight: 1
         }}>
           Your Personalized Journey
         </div>
         <div style={{
-          fontSize: isMobile ? 24 : 24,
+          fontSize: isMobile ? 24 : 20, // Reduced from 24 to 20
           color: '#64748b',
           lineHeight: 1.4
         }}>
@@ -132,7 +131,7 @@ export const YourJourneyTimeline: React.FC<{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: isMobile ? 40 : 20,
+        marginBottom: isMobile ? 40 : 10, // Reduced from 20 to 10
         opacity: interpolate(frame, [20, 35], [0, 1], {extrapolateRight: 'clamp'})
       }}>
         <svg width={chartWidth} height={chartHeight} style={{display: 'block'}}>
@@ -260,12 +259,12 @@ export const YourJourneyTimeline: React.FC<{
         </svg>
       </div>
       
-      {/* Benefits - Simplified for mobile */}
+      {/* Benefits */}
       {frame > 120 && (
         <div style={{
           background: 'white',
-          borderRadius: isMobile ? 20 : 20,
-          padding: isMobile ? '40px 30px' : '40px 50px',
+          borderRadius: isMobile ? 20 : 16,
+          padding: isMobile ? '40px 30px' : '20px 40px', // Reduced from 40px to 20px on desktop
           boxShadow: '0 10px 40px rgba(0,0,0,0.08)',
           opacity: interpolate(frame, [120, 135], [0, 1], {extrapolateRight: 'clamp'}),
           flex: '1 1 auto',
@@ -274,10 +273,10 @@ export const YourJourneyTimeline: React.FC<{
           justifyContent: 'center'
         }}>
           <div style={{
-            fontSize: isMobile ? 48 : 42,
+            fontSize: isMobile ? 48 : 32, // Reduced from 42 to 32
             fontWeight: 900,
             color: '#0f172a',
-            marginBottom: isMobile ? 40 : 38,
+            marginBottom: isMobile ? 40 : 16, // Reduced from 38 to 16
             textAlign: 'center',
             lineHeight: 1.1
           }}>
@@ -287,7 +286,7 @@ export const YourJourneyTimeline: React.FC<{
           <div style={{
             display: 'grid',
             gridTemplateColumns: '1fr',
-            gap: isMobile ? 24 : 28
+            gap: isMobile ? 24 : 16 // Reduced from 28 to 16
           }}>
             {[
               {title: 'GLP-1 Medication', desc: 'Physician-prescribed, delivered to your door.'},
@@ -297,7 +296,7 @@ export const YourJourneyTimeline: React.FC<{
             ].map((item, i) => (
               <div key={i} style={{
                 background: 'linear-gradient(to right, #f8fafc 0%, #ffffff 100%)',
-                padding: isMobile ? '28px 24px' : '22px 26px',
+                padding: isMobile ? '28px 24px' : '16px 20px', // Reduced from 22px to 16px
                 borderRadius: 12,
                 borderLeft: `4px solid ${brand}`,
                 boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
@@ -305,16 +304,16 @@ export const YourJourneyTimeline: React.FC<{
                 transform: `translateX(${interpolate(frame, [130 + i*3, 140 + i*3], [-20, 0], {extrapolateRight: 'clamp'})}px)`
               }}>
                 <div style={{
-                  fontSize: isMobile ? 28 : 22,
+                  fontSize: isMobile ? 28 : 18, // Reduced from 22 to 18
                   fontWeight: 700,
                   color: '#1e293b',
-                  marginBottom: 10,
+                  marginBottom: isMobile ? 10 : 6, // Reduced
                   lineHeight: 1.25
                 }}>
                   {item.title}
                 </div>
                 <div style={{
-                  fontSize: isMobile ? 22 : 17,
+                  fontSize: isMobile ? 22 : 15, // Reduced from 17 to 15
                   color: '#64748b',
                   lineHeight: 1.5
                 }}>
