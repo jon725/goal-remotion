@@ -64,7 +64,7 @@ function generateScript(name, currentWeight, goalWeight) {
 Imagine yourself ${monthsToGoal} months from now, ${weightLoss} pounds lighter, healthier, happier, living the life you deserve. 
 
 Picture going from ${currentWeight} pounds to ${goalWeight} pounds. That transformation? It's closer than you think. 
-
+<break time="2.0s"/>
 You won't do this alone. Meet Dr. Michael Fitch, your board-certified physician, <break time="1.0s"/>and Betsy Moeller, your nutritional coach. Real experts dedicated to your success. 
 <break time="4.0s"/>
 Your personalised journey, ${currentWeight} pounds to ${goalWeight} in approximately ${monthsToGoal} months. Your medication delivered monthly. 
