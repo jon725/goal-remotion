@@ -84,7 +84,7 @@ Your transformation begins right now. Start your treatment plan today.
 
 async function generateElevenLabsAudio(text) {
   const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
-  const VOICE_ID = process.env.ELEVENLABS_VOICE_ID || 'T7eLpgAAhoXHlrNajG8v';
+  const VOICE_ID = process.env.ELEVENLABS_VOICE_ID || 'tnSpp4vdxKPjI9w0GnoV';
 
   if (!ELEVENLABS_API_KEY) {
     throw new Error('ELEVENLABS_API_KEY not configured');
