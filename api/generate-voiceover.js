@@ -65,7 +65,7 @@ Imagine yourself ${monthsToGoal} months from now, ${weightLoss} pounds lighter, 
 
 Picture going from ${currentWeight} pounds to ${goalWeight} pounds. That transformation? It's closer than you think. 
 
-You won't do this alone. Meet Dr. Michael Fitch, your board-certified physician, and Betsy Moeller, your nutritional coach. Real experts dedicated to your success. 
+You won't do this alone. Meet Dr. Michael Fitch, your board-certified physician, <break time="1.0s"/>and Betsy Moeller, your nutritional coach. Real experts dedicated to your success. 
 
 Your personalised journey, ${currentWeight} pounds to ${goalWeight} in approximately ${monthsToGoal} months. Your medication delivered monthly. 
 
