@@ -11,10 +11,18 @@
   <div id="root"></div>
   <script src="/remotion-player.js"></script>
   <script>
-    // Detect mobile and set composition dimensions
-    const isMobile = window.innerWidth <= 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    // Only use user agent for mobile detection, ignore window width since iframe can be any size
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const compositionWidth = isMobile ? 1080 : 1920;
     const compositionHeight = isMobile ? 1920 : 1080;
+
+    console.log('Player.html detection:', { 
+      userAgent: navigator.userAgent, 
+      isMobile, 
+      compositionWidth, 
+      compositionHeight,
+      windowSize: { width: window.innerWidth, height: window.innerHeight }
+    });
 
     window.addEventListener('message', (event) => {
       if (event.data.type === 'RENDER_VIDEO') {
@@ -27,6 +35,8 @@
           compositionWidth: compositionWidth,
           compositionHeight: compositionHeight
         };
+        
+        console.log('Rendering video with dimensions:', propsWithDimensions);
         
         root.render(React.createElement(PlayerWrapper, propsWithDimensions));
       }

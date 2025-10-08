@@ -98,7 +98,7 @@ Your transformation begins right now. Start your ${plan.toLowerCase()} plan toda
     console.log('Generating voiceover with ElevenLabs...');
 
     const audio = await client.generate({
-      voice: "wJqPPQ618aTW29mptyoc",
+      voice: "tnSpp4vdxKPjI9w0GnoV",
       text: script,
       model_id: "eleven_multilingual_v2",
       voice_settings: {
