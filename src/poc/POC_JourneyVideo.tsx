@@ -1,5 +1,5 @@
 import React from 'react';
-import {AbsoluteFill, useCurrentFrame, Audio} from 'remotion';
+import {AbsoluteFill, useCurrentFrame, useVideoConfig, Audio} from 'remotion';
 import {BrightBackground} from './components/BrightBackground';
 import {HeroOpener} from './components/HeroOpener';
 import {TransformationVision} from './components/TransformationVision';
@@ -50,6 +50,7 @@ export const POC_JourneyVideo: React.FC<Props> = ({
   voiceoverUrl,
 }) => {
   const frame = useCurrentFrame();
+  const { durationInFrames } = useVideoConfig();
   
   const assumptions: PlanAssumptions = {
     ...DEFAULT_ASSUMPTIONS,
@@ -79,6 +80,15 @@ export const POC_JourneyVideo: React.FC<Props> = ({
     <AbsoluteFill style={{
       fontFamily: 'Inter, -apple-system, system-ui, sans-serif'
     }}>
+      {/* Background Music */}
+      <Audio
+        src="/background-audio-new.mp3"
+        volume={0.15}
+        startFrom={0}
+        endAt={durationInFrames}
+      />
+
+      {/* Voiceover */}
       {voiceoverUrl && voiceoverUrl !== '' && (
         <Audio src={voiceoverUrl} volume={1.0} />
       )}
