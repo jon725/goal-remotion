@@ -70,13 +70,13 @@ export const MeetYourTeam: React.FC<{
             <TeamMemberCard
               name="Dr. Michael Fitch"
               role="Your GOAL.MD Physician"
-              description="Board-certified in weight management. Dr. Fitch personally oversees your treatment."
+              description="Board-certified in weight management and metabolic health, Dr. Fitch personally oversees your progress and treatment."
               brand={brand}
               imageUrl="https://assets.cdn.filesafe.space/LchNNcx4oSFzaphyXK3t/media/689d01e1d232a3b5c315a965.png"
               highlights={[
-                'Monthly check-ins',
-                'Personalized dosing',
-                'Real medical oversight'
+                'Safe prescriptions with real oversight',
+                'Direct monthly check-ins with your physician',
+                'Personalized dosing for maximum results'
               ]}
               isMobile={isMobile}
             />
@@ -93,13 +93,13 @@ export const MeetYourTeam: React.FC<{
             <TeamMemberCard
               name="Betsy Moeller"
               role="Your Nutrition Coach"
-              description="Registered dietitian helping you achieve lasting success."
+              description="Certified nutrition coach helping you turn results into lasting success through practical, sustainable strategies."
               brand={brand}
               imageUrl="https://storage.googleapis.com/msgsndr/LchNNcx4oSFzaphyXK3t/media/68b87a79ca12c66425fd793c.png"
               highlights={[
-                'Custom meal planning',
-                'Weekly accountability',
-                'Prevent plateaus'
+                'Custom meal planning for your lifestyle',
+                'Weekly accountability to keep you on track',
+                'Nutrition strategies that prevent plateaus'
               ]}
               isMobile={isMobile}
             />
@@ -125,7 +125,8 @@ export const MeetYourTeam: React.FC<{
                 fontWeight: 900,
                 color: brand
               }}>
-                Available 24/7
+              Always accessible. Always consistent.
+              Your team is available 24/7 through secure messaging.
               </div>
             </div>
           </div>

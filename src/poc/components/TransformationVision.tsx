@@ -161,10 +161,10 @@ export const TransformationVision: React.FC<{
             marginTop: isMobile ? 40 : 30
           }}>
             {[
-              {icon: '💊', text: 'Doctor Prescribed'},
-              {icon: '📊', text: 'Proven Results'},
-              {icon: '🎯', text: 'Reduces Cravings'},
-              {icon: '✨', text: 'Sustainable'}
+              {icon: '💊', text: 'Doctor-Prescribed & Monitored for Safety'},
+              {icon: '📊', text: 'Clinically Proven, Real Results'},
+              {icon: '🎯', text: 'Reduces Food Noise & Cravings'},
+              {icon: '✨', text: 'Sustainable Weight Loss & Better Health'}
             ].map((item, i) => (
               <div key={i} style={{
                 padding: isMobile ? 24 : 18,

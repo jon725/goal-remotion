@@ -293,9 +293,9 @@ export const YourJourneyTimeline: React.FC<{
           }}>
             {[
               {title: 'GLP-1 Medication', desc: 'Physician-prescribed, delivered to your door.'},
-              {title: 'Real Medical Care', desc: 'Board-certified physicians, not a marketing company.'},
-              {title: 'Unlimited Team Access', desc: 'Call, text, email, or video anytime.'},
-              {title: 'Nutrition Coaching', desc: 'Weekly support to maximize results.'}
+              {title: 'Real Medical Care', desc: 'Not a marketing company — a true medical practice with board-certified physicians.'},
+              {title: 'Unlimited Access to Your Team', desc: 'Call, text, email, or video conference anytime — not just email like other companies.'},
+              {title: 'Nutrition Coaching', desc: 'Weekly support from Betsy to maximize results and prevent plateaus.'}
             ].map((item, i) => (
               <div key={i} style={{
                 background: 'linear-gradient(to right, #f8fafc 0%, #ffffff 100%)',
