@@ -17,25 +17,25 @@ export const SuccessStories: React.FC<{
       alignItems:'center',
       justifyContent:'center',
       opacity: fadeIn,
-      padding: isMobile ? '60px 40px' : '0 80px'
+      padding: isMobile ? '100px 40px 40px' : '0 80px'
     }}>
       <div style={{maxWidth: isMobile ? '100%' : 1400, width: '100%'}}>
         <div style={{
-          fontSize: isMobile ? 42 : 56,
+          fontSize: isMobile ? 56 : 56,
           fontWeight: 900,
           color: '#0f172a',
           textAlign: 'center',
-          marginBottom: isMobile ? 16 : 24,
+          marginBottom: isMobile ? 24 : 24,
           lineHeight: 1.1
         }}>
           Join Thousands of Success Stories
         </div>
         
         <div style={{
-          fontSize: isMobile ? 18 : 24,
+          fontSize: isMobile ? 24 : 24,
           color: '#64748b',
           textAlign: 'center',
-          marginBottom: isMobile ? 50 : 80,
+          marginBottom: isMobile ? 60 : 80,
           lineHeight: 1.4
         }}>
           Real people. Real results. <span style={{color: brand, fontWeight: 700}}>No gimmicks.</span>
@@ -45,8 +45,8 @@ export const SuccessStories: React.FC<{
         <div style={{
           display: 'grid',
           gridTemplateColumns: isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)',
-          gap: isMobile ? 16 : 24,
-          marginBottom: isMobile ? 50 : 80
+          gap: isMobile ? 20 : 24,
+          marginBottom: isMobile ? 60 : 80
         }}>
           {[
             {value: '15,000+', label: 'Active Patients'},
@@ -55,7 +55,7 @@ export const SuccessStories: React.FC<{
             {value: '92%', label: 'Would Recommend'}
           ].map((stat, i) => (
             <div key={i} style={{
-              padding: isMobile ? 24 : 32,
+              padding: isMobile ? 28 : 32,
               background: 'white',
               borderRadius: 20,
               textAlign: 'center',
@@ -65,16 +65,16 @@ export const SuccessStories: React.FC<{
               transform: `translateY(${interpolate(frame, [20 + i*5, 35 + i*5], [30, 0], {extrapolateRight: 'clamp'})}px)`
             }}>
               <div style={{
-                fontSize: isMobile ? 38 : 52,
+                fontSize: isMobile ? 48 : 52,
                 fontWeight: 900,
                 color: brand,
-                marginBottom: 8,
+                marginBottom: 10,
                 lineHeight: 1
               }}>
                 {stat.value}
               </div>
               <div style={{
-                fontSize: isMobile ? 14 : 18,
+                fontSize: isMobile ? 18 : 18,
                 color: '#64748b',
                 fontWeight: 600,
                 lineHeight: 1.3
@@ -89,7 +89,7 @@ export const SuccessStories: React.FC<{
         <div style={{
           display: 'grid',
           gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-          gap: isMobile ? 24 : 32
+          gap: isMobile ? 28 : 32
         }}>
           {[
             {
@@ -127,21 +127,21 @@ export const SuccessStories: React.FC<{
         {/* Trust badges */}
         {frame > 120 && (
           <div style={{
-            marginTop: isMobile ? 50 : 70,
+            marginTop: isMobile ? 60 : 70,
             display: 'flex',
             flexDirection: isMobile ? 'column' : 'row',
             justifyContent: 'center',
             alignItems: 'center',
-            gap: isMobile ? 24 : 40,
+            gap: isMobile ? 28 : 40,
             opacity: interpolate(frame, [120, 140], [0, 1], {extrapolateRight: 'clamp'})
           }}>
-            {/* BBB Badge Image - Even bigger */}
+            {/* BBB Badge Image */}
             <div style={{
-              height: isMobile ? 140 : 160,
+              height: isMobile ? 160 : 160,
               display: 'flex',
               alignItems: 'center',
               background: 'white',
-              padding: isMobile ? '20px 32px' : '24px 40px',
+              padding: isMobile ? '24px 40px' : '24px 40px',
               borderRadius: 16,
               boxShadow: '0 8px 30px rgba(0,0,0,.12)',
               border: '2px solid #e2e8f0'
@@ -158,10 +158,10 @@ export const SuccessStories: React.FC<{
             
             {/* Other badges */}
             <div style={{
-              padding: isMobile ? '20px 32px' : '24px 40px',
+              padding: isMobile ? '24px 40px' : '24px 40px',
               background: 'white',
               borderRadius: 16,
-              fontSize: isMobile ? 20 : 24,
+              fontSize: isMobile ? 26 : 24,
               fontWeight: 700,
               color: '#1e293b',
               boxShadow: '0 8px 30px rgba(0,0,0,.12)',
@@ -170,16 +170,16 @@ export const SuccessStories: React.FC<{
               lineHeight: 1.4
             }}>
               <div style={{marginBottom: 8}}>HIPAA Compliant</div>
-              <div style={{fontSize: isMobile ? 16 : 18, color: '#64748b', fontWeight: 600}}>
+              <div style={{fontSize: isMobile ? 20 : 18, color: '#64748b', fontWeight: 600}}>
                 Your privacy protected
               </div>
             </div>
             
             <div style={{
-              padding: isMobile ? '20px 32px' : '24px 40px',
+              padding: isMobile ? '24px 40px' : '24px 40px',
               background: 'white',
               borderRadius: 16,
-              fontSize: isMobile ? 20 : 24,
+              fontSize: isMobile ? 26 : 24,
               fontWeight: 700,
               color: '#1e293b',
               boxShadow: '0 8px 30px rgba(0,0,0,.12)',
@@ -188,7 +188,7 @@ export const SuccessStories: React.FC<{
               lineHeight: 1.4
             }}>
               <div style={{marginBottom: 8}}>Secure & Private</div>
-              <div style={{fontSize: isMobile ? 16 : 18, color: '#64748b', fontWeight: 600}}>
+              <div style={{fontSize: isMobile ? 20 : 18, color: '#64748b', fontWeight: 600}}>
                 Bank-level encryption
               </div>
             </div>
@@ -221,7 +221,7 @@ const TestimonialCard: React.FC<{
   
   return (
     <div style={{
-      padding: isMobile ? 28 : 32,
+      padding: isMobile ? 36 : 32,
       background: 'white',
       borderRadius: 20,
       boxShadow: '0 10px 40px rgba(0,0,0,.08)',
@@ -232,13 +232,13 @@ const TestimonialCard: React.FC<{
       {/* Weight loss badge */}
       <div style={{
         display: 'inline-block',
-        padding: isMobile ? '6px 16px' : '8px 20px',
+        padding: isMobile ? '10px 20px' : '8px 20px',
         background: `linear-gradient(135deg, ${brand}20, ${brand}40)`,
         borderRadius: 12,
-        marginBottom: 16
+        marginBottom: 20
       }}>
         <div style={{
-          fontSize: isMobile ? 24 : 28,
+          fontSize: isMobile ? 32 : 28,
           fontWeight: 900,
           color: brand
         }}>
@@ -248,10 +248,10 @@ const TestimonialCard: React.FC<{
       
       {/* Quote */}
       <div style={{
-        fontSize: isMobile ? 16 : 18,
+        fontSize: isMobile ? 22 : 18,
         color: '#1e293b',
         lineHeight: 1.6,
-        marginBottom: 20,
+        marginBottom: 24,
         fontStyle: 'italic'
       }}>
         "{quote}"
@@ -259,7 +259,7 @@ const TestimonialCard: React.FC<{
       
       {/* Author */}
       <div style={{
-        fontSize: isMobile ? 16 : 18,
+        fontSize: isMobile ? 22 : 18,
         fontWeight: 700,
         color: '#0f172a'
       }}>
@@ -269,8 +269,8 @@ const TestimonialCard: React.FC<{
       {/* Stars */}
       <div style={{
         color: '#fbbf24',
-        fontSize: isMobile ? 18 : 20,
-        marginTop: 12
+        fontSize: isMobile ? 24 : 20,
+        marginTop: 16
       }}>
         ★★★★★
       </div>

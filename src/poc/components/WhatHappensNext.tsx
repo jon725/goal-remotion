@@ -18,35 +18,36 @@ export const WhatHappensNext: React.FC<{
       alignItems:'center',
       justifyContent:'center',
       opacity: fadeIn,
-      padding: isMobile ? '60px 40px' : '0 80px'
+      padding: isMobile ? '100px 40px 40px' : '0 80px'
     }}>
       <div style={{maxWidth: isMobile ? '100%' : 1400, width: '100%'}}>
         <div style={{
-          fontSize: isMobile ? 42 : 56,
+          fontSize: isMobile ? 56 : 56,
           fontWeight: 900,
           color: '#0f172a',
           textAlign: 'center',
-          marginBottom: isMobile ? 16 : 24,
+          marginBottom: isMobile ? 24 : 24,
           lineHeight: 1.1
         }}>
           Your Next Steps Are Simple
         </div>
         
         <div style={{
-          fontSize: isMobile ? 18 : 24,
+          fontSize: isMobile ? 24 : 24,
           color: '#64748b',
           textAlign: 'center',
-          marginBottom: isMobile ? 40 : 60,
+          marginBottom: isMobile ? 60 : 60,
           lineHeight: 1.4
         }}>
-       No surprises. Just a clear, guided path to starting your transformation.        </div>
+          No surprises. Just a clear, guided path to starting your transformation.
+        </div>
         
         {/* Simplified Timeline */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
-          gap: isMobile ? 20 : 24,
-          marginBottom: isMobile ? 40 : 60
+          gap: isMobile ? 28 : 24,
+          marginBottom: isMobile ? 60 : 60
         }}>
           <SimpleStep
             number={1}
@@ -93,7 +94,7 @@ export const WhatHappensNext: React.FC<{
         {/* Key Message */}
         {frame > 85 && (
           <div style={{
-            padding: isMobile ? 32 : 40,
+            padding: isMobile ? 40 : 40,
             background: `linear-gradient(135deg, ${brand}15, #10b98115)`,
             borderRadius: 24,
             border: `3px solid ${brand}`,
@@ -102,23 +103,23 @@ export const WhatHappensNext: React.FC<{
             transform: `scale(${spring({frame: frame - 85, fps, config: {damping: 15}})})`,
           }}>
             <div style={{
-              fontSize: isMobile ? 26 : 32,
+              fontSize: isMobile ? 36 : 32,
               fontWeight: 900,
               color: '#0f172a',
-              marginBottom: 16,
+              marginBottom: 20,
               lineHeight: 1.2
             }}>
               Doctor-reviewed. Risk-free.
             </div>
             <div style={{
-              fontSize: isMobile ? 17 : 22,
+              fontSize: isMobile ? 24 : 22,
               color: '#475569',
               lineHeight: 1.6,
               maxWidth: 900,
               margin: '0 auto'
             }}>
               During your online consultation, Dr. Fitch reviews your medical history and may adjust your treatment plan based on his clinical expertise.
-              <span style={{color: brand, fontWeight: 700}}> If you’re not approved, you’ll get a full refund — guaranteed.</span>
+              <span style={{color: brand, fontWeight: 700}}> If you're not approved, you'll get a full refund — guaranteed.</span>
             </div>
           </div>
         )}
@@ -161,15 +162,15 @@ const SimpleStep: React.FC<{
         position: 'absolute',
         top: -10,
         left: isMobile ? 10 : -10,
-        width: isMobile ? 32 : 36,
-        height: isMobile ? 32 : 36,
+        width: isMobile ? 44 : 36,
+        height: isMobile ? 44 : 36,
         borderRadius: '50%',
         background: `linear-gradient(135deg, ${brand}, #10b981)`,
         color: 'white',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: isMobile ? 16 : 18,
+        fontSize: isMobile ? 22 : 18,
         fontWeight: 900,
         border: '3px solid white',
         boxShadow: '0 4px 12px rgba(0,0,0,.2)',
@@ -180,28 +181,28 @@ const SimpleStep: React.FC<{
       
       {/* Card */}
       <div style={{
-        padding: isMobile ? '32px 20px' : '40px 20px',
+        padding: isMobile ? '48px 28px' : '40px 20px',
         background: 'white',
         borderRadius: 20,
         boxShadow: '0 10px 40px rgba(0,0,0,.08)',
         border: '2px solid #e2e8f0',
         textAlign: 'center',
-        minHeight: isMobile ? 160 : 200
+        minHeight: isMobile ? 220 : 200
       }}>
         {/* Icon */}
         <div style={{
-          fontSize: isMobile ? 40 : 48,
-          marginBottom: 12
+          fontSize: isMobile ? 56 : 48,
+          marginBottom: 16
         }}>
           {icon}
         </div>
         
         {/* Title */}
         <div style={{
-          fontSize: isMobile ? 18 : 20,
+          fontSize: isMobile ? 26 : 20,
           fontWeight: 900,
           color: '#0f172a',
-          marginBottom: subtitle ? 8 : 0,
+          marginBottom: subtitle ? 12 : 0,
           lineHeight: 1.3
         }}>
           {title}
@@ -210,7 +211,7 @@ const SimpleStep: React.FC<{
         {/* Subtitle */}
         {subtitle && (
           <div style={{
-            fontSize: isMobile ? 14 : 16,
+            fontSize: isMobile ? 20 : 16,
             fontWeight: 700,
             color: brand,
             lineHeight: 1.4
