@@ -54,7 +54,7 @@ export const POC_JourneyVideo: React.FC<Props> = ({
   
   const assumptions: PlanAssumptions = {
     ...DEFAULT_ASSUMPTIONS,
-    ...(plan === 'Tablet' || plan === 'Oral' ? {steadyLossLbsPerWeek: 1.4} : {}),
+    steadyLossLbsPerWeek: (plan === 'Tablet' || plan === 'Oral') ? 1.5 : 2.5,
   };
 
   const {milestones, etaTo20, etaToGoal} = projectETAs(
@@ -82,11 +82,11 @@ export const POC_JourneyVideo: React.FC<Props> = ({
     }}>
       {/* Background Music */}
       <Audio
-  src="https://remotionlambda-useast1-gtrmt3wak7.s3.us-east-1.amazonaws.com/background-audio-new.mp3"
-  volume={0.15}
-  startFrom={0}
-  endAt={durationInFrames}
-/>
+        src="https://remotionlambda-useast1-gtrmt3wak7.s3.us-east-1.amazonaws.com/background-audio-new.mp3"
+        volume={0.15}
+        startFrom={0}
+        endAt={durationInFrames}
+      />
 
       {/* Voiceover */}
       {voiceoverUrl && voiceoverUrl !== '' && (
