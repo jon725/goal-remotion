@@ -92,7 +92,7 @@ Thousands of people are already transforming their lives with GoalMD. This isn't
 So, what's next? You'll select your preferred treatment and book your appointment. This choice is provisional. Dr. Fitch makes the final call. During your online consultation, he reviews your medical history and goals, then creates your personalised plan.
 
 He may adjust your medication based on his clinical expertise. That's the GoalMD difference — real doctors, real care. If you're not approved, you receive a full refund. Once approved, your medication arrives in five to seven days. 
-<break time="5.5s"/>
+<break time="10.5s"/>
 You've taken the first step ${name},.
 Now lock in your plan — and get free shipping for life.
 
