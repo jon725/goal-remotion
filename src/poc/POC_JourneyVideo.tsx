@@ -96,10 +96,17 @@ export const POC_JourneyVideo: React.FC<Props> = ({
       <BrightBackground brand={brand} />
 
       <SafeArea>
-        {frame < 248 && (
-          <HeroOpener name={name} frame={frame} brand={brand} />
-        )}
-
+      {frame < 248 && (
+  <HeroOpener 
+    name={name} 
+    frame={frame} 
+    brand={brand}
+    startWeight={startWeight}
+    currentWeight={currentWeight}
+    goalWeight={goalWeight}
+    etaToGoal={etaToGoal}
+  />
+)}
         {frame >= 248 && frame < 495 && (
           <TransformationVision
             startWeight={startWeight}
@@ -129,14 +136,14 @@ export const POC_JourneyVideo: React.FC<Props> = ({
           <SuccessStories frame={frame - 1470} brand={brand} />
         )}
 
-        {frame >= 1755 && frame < 2820 && (
+        {frame >= 1755 && frame < 2670 && (
           <WhatHappensNext frame={frame - 1755} brand={brand} />
         )}
 
-        {frame >= 2820 && (
+        {frame >= 2670 && (
           <FinalCTA 
             plan={displayPlan} 
-            frame={frame - 2820} 
+            frame={frame - 2670} 
             brand={brand}
             pricing={pricing}
             name={name}

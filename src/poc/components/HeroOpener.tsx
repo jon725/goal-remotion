@@ -5,9 +5,16 @@ export const HeroOpener: React.FC<{
   name: string;
   frame: number;
   brand: string;
-}> = ({name, frame, brand}) => {
+  startWeight: number;
+  currentWeight: number;
+  goalWeight: number;
+  etaToGoal: number;
+}> = ({name, frame, brand, startWeight, currentWeight, goalWeight, etaToGoal}) => {
   const {fps, width, height} = useVideoConfig();
   const isMobile = height > width;
+  
+  // Calculate months to goal from weeks
+  const monthsToGoal = Math.ceil(etaToGoal / 4);
   
   const fadeIn = interpolate(frame, [0, 30], [0, 1], {
     easing: Easing.out(Easing.cubic),
@@ -57,7 +64,7 @@ export const HeroOpener: React.FC<{
         backgroundClip: 'text',
         color: 'transparent'
       }}>
-        {name}, 6 Months<br/>From Now
+        {name}, {monthsToGoal} Months<br/>From Now
       </div>
       
       <div style={{
