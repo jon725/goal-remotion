@@ -18,7 +18,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { name, currentWeight, goalWeight } = req.body;
+    const { name, currentWeight, goalWeight, treatmentType } = req.body;
 
     if (!name || !currentWeight || !goalWeight) {
       return res.status(400).json({ 
@@ -26,10 +26,10 @@ export default async function handler(req, res) {
       });
     }
 
-    console.log('Generating voiceover for:', name);
+    console.log('Generating voiceover for:', name, 'Treatment:', treatmentType);
 
     // Create personalized script
-    const script = generateScript(name, currentWeight, goalWeight);
+    const script = generateScript(name, currentWeight, goalWeight, treatmentType);
 
     // Generate voiceover with ElevenLabs
     const audioBuffer = await generateElevenLabsAudio(script);
@@ -52,11 +52,27 @@ export default async function handler(req, res) {
   }
 }
 
-function generateScript(name, currentWeight, goalWeight) {
+function generateScript(name, currentWeight, goalWeight, treatmentType) {
   const weightLoss = currentWeight - goalWeight;
   
-  // Use the same calculation as YourJourneyTimeline component
-  const weeksToGoal = weightLoss / 1.5; // Assuming 1.5 lbs/week
+  // Match planMath.ts calculations based on treatment type
+  const rampWeeks = 8;
+  const rampLossLbsPerWeek = 0.8;
+  
+  // Oral = 1.5 lbs/week, Injection = 2.5 lbs/week (default)
+  const steadyLossLbsPerWeek = treatmentType === 'Oral' ? 1.5 : 2.5;
+  
+  // Calculate weeks to goal using same logic as weeksToLose()
+  const rampCap = rampWeeks * rampLossLbsPerWeek; // 6.4 lbs
+  let weeksToGoal;
+  
+  if (weightLoss <= rampCap) {
+    weeksToGoal = weightLoss / rampLossLbsPerWeek;
+  } else {
+    const remaining = weightLoss - rampCap;
+    weeksToGoal = rampWeeks + (remaining / steadyLossLbsPerWeek);
+  }
+  
   const monthsToGoal = Math.ceil(weeksToGoal / 4);
   
   return `<break time="5.5s"/>
@@ -69,15 +85,16 @@ You won't do this alone. Meet Dr. Michael Fitch, your board-certified physician,
 <break time="4.0s"/>
 Your personalised journey, ${currentWeight} pounds to ${goalWeight} in approximately ${monthsToGoal} months. Your medication delivered monthly. 
 
-Regular check-ins with Dr Fitch. Weekly support from Betsy. Unlimited messaging. Everything you need. 
+Regular check-ins with Dr. Fitch. Weekly support from Betsy. Unlimited messaging. Everything you need. 
 
 Thousands of people are already transforming their lives with GoalMD. This isn't a gimmick. These are real, lasting results. 
 <break time="4.0s"/>
-So, what's next? You'll select your preferred treatment and book your appointment. This choice is provisional. Dr Fitch makes the final call. During your online consultation, he reviews your medical history and goals, then creates your personalised plan.
+So, what's next? You'll select your preferred treatment and book your appointment. This choice is provisional. Dr. Fitch makes the final call. During your online consultation, he reviews your medical history and goals, then creates your personalised plan.
 
-He may adjust your medication based on his clinical expertise. That's what sets us apart. Real medical oversight, not a vending machine. If you're not approved, you receive a full refund. Once approved, your medication arrives in five to seven days. 
-
-Your transformation begins right now. Start your treatment plan today.
+He may adjust your medication based on his clinical expertise. That's the GoalMD difference — real doctors, real care. If you're not approved, you receive a full refund. Once approved, your medication arrives in five to seven days. 
+<break time="5.5s"/>
+You've taken the first step ${name},.
+Now lock in your plan — and get free shipping for life.
 
   `.trim();
 }
