@@ -82,11 +82,11 @@ export const POC_JourneyVideo: React.FC<Props> = ({
     }}>
       {/* Background Music */}
       <Audio
-        src="/background-audio-new.mp3"
-        volume={0.15}
-        startFrom={0}
-        endAt={durationInFrames}
-      />
+  src="https://remotionlambda-useast1-gtrmt3wak7.s3.us-east-1.amazonaws.com/background-audio-new.mp3"
+  volume={0.15}
+  startFrom={0}
+  endAt={durationInFrames}
+/>
 
       {/* Voiceover */}
       {voiceoverUrl && voiceoverUrl !== '' && (
