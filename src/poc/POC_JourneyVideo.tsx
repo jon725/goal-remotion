@@ -139,6 +139,9 @@ export const POC_JourneyVideo: React.FC<Props> = ({
             frame={frame - 2820} 
             brand={brand}
             pricing={pricing}
+            name={name}
+            startWeight={startWeight}
+            goalWeight={goalWeight}
           />
         )}
       </SafeArea>

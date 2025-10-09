@@ -14,8 +14,12 @@ export const FinalCTA: React.FC<{
   frame: number;
   brand: string;
   pricing: PricingTier;
-}> = ({plan, frame, brand, pricing}) => {
-  const {fps} = useVideoConfig();
+  name?: string;
+  startWeight?: number;
+  goalWeight?: number;
+}> = ({plan, frame, brand, pricing, name = 'Your', startWeight = 200, goalWeight = 150}) => {
+  const {fps, width, height} = useVideoConfig();
+  const isMobile = height > width;
   
   const fadeIn = interpolate(frame, [0, 25], [0, 1], {
     easing: Easing.out(Easing.cubic),
@@ -23,131 +27,116 @@ export const FinalCTA: React.FC<{
   });
   
   const scaleIn = spring({frame: frame - 10, fps, config: {damping: 12}});
-  const buttonPulse = Math.sin(frame * 0.1) * 0.03 + 1;
   
-  // Voiceover: "Your transformation starts right now. Take the first step today."
+  // Arrow bounce animation
+  const arrowBounce = Math.sin(frame * 0.15) * 10;
+  const arrowOpacity = interpolate(frame, [90, 110], [0, 1], {extrapolateRight: 'clamp'});
+  
+  // Price emphasis pulse
+  const pricePulse = interpolate(
+    Math.sin(frame * 0.1),
+    [-1, 1],
+    [1, 1.05]
+  );
+  
+  const weightLoss = startWeight - goalWeight;
+  const displayName = name || 'Your';
   
   return (
     <div style={{
       position:'absolute',
       inset:0,
       display:'flex',
+      flexDirection: 'column',
       alignItems:'center',
       justifyContent:'center',
-      opacity: fadeIn
+      opacity: fadeIn,
+      padding: isMobile ? '60px 30px' : '0 80px'
     }}>
       <div style={{
-        maxWidth: 1000,
+        maxWidth: isMobile ? '100%' : 1100,
         width: '100%',
         textAlign: 'center',
-        padding: '0 80px',
         transform: `scale(${scaleIn})`
       }}>
         {/* Main headline */}
         <div style={{
-          fontSize: 72,
+          fontSize: isMobile ? 42 : 56,
           fontWeight: 900,
           color: '#0f172a',
-          marginBottom: 32,
-          lineHeight: 1.1
+          marginBottom: isMobile ? 16 : 20,
+          lineHeight: 1.2
         }}>
-          Your Journey<br/>
-          Starts <span style={{
-            background: `linear-gradient(135deg, ${brand}, #10b981)`,
-            WebkitBackgroundClip: 'text',
-            backgroundClip: 'text',
-            color: 'transparent'
-          }}>Right Now</span>
+          {displayName}, your transformation starts now.
         </div>
         
         {/* Subheadline */}
         <div style={{
-          fontSize: 28,
+          fontSize: isMobile ? 22 : 28,
           color: '#64748b',
-          marginBottom: 48,
+          marginBottom: isMobile ? 32 : 40,
           fontWeight: 500,
           lineHeight: 1.5
         }}>
-          Join 15,000+ people who've transformed their lives with GOAL.MD.<br/>
-          No waiting rooms. No judgment. Just results.
+          You're just <span style={{fontWeight: 700, color: brand}}>{weightLoss} pounds</span> away from your goal — and we'll help you get there.
         </div>
         
-        {/* CTA Button */}
-        <div style={{
-          marginBottom: 48,
-          opacity: frame > 30 ? 1 : 0
-        }}>
+        {/* Large Pricing Card */}
+        {frame > 30 && (
           <div style={{
-            display: 'inline-block',
-            padding: '28px 72px',
-            background: `linear-gradient(135deg, ${brand}, #10b981)`,
-            borderRadius: 20,
-            color: 'white',
-            fontSize: 36,
-            fontWeight: 900,
-            boxShadow: `0 20px 60px ${brand}50`,
-            cursor: 'pointer',
-            transform: `scale(${buttonPulse})`,
-            border: '4px solid white',
-            transition: 'transform 0.3s ease'
-          }}>
-            Start Your {plan} Plan Today →
-          </div>
-        </div>
-        
-        {/* Pricing */}
-        {frame > 50 && (
-          <div style={{
-            marginBottom: 40,
-            opacity: interpolate(frame, [50, 70], [0, 1], {extrapolateRight: 'clamp'})
+            marginBottom: isMobile ? 40 : 48,
+            opacity: interpolate(frame, [30, 50], [0, 1], {extrapolateRight: 'clamp'}),
+            transform: `scale(${scaleIn})`
           }}>
             <div style={{
               display: 'inline-block',
-              padding: '24px 48px',
+              padding: isMobile ? '32px 40px' : '40px 60px',
               background: 'white',
-              borderRadius: 16,
-              boxShadow: '0 10px 40px rgba(0,0,0,.08)',
-              border: `2px solid ${brand}20`,
+              borderRadius: 24,
+              boxShadow: `0 20px 80px ${brand}30`,
+              border: `4px solid ${brand}`,
               position: 'relative'
             }}>
               {/* Badge */}
               {pricing.badge && (
                 <div style={{
                   position: 'absolute',
-                  top: -12,
-                  right: -12,
+                  top: -16,
+                  right: isMobile ? 10 : -16,
                   background: `linear-gradient(135deg, ${brand}, #10b981)`,
                   color: 'white',
-                  padding: '8px 20px',
-                  borderRadius: 12,
-                  fontSize: 14,
+                  padding: isMobile ? '10px 24px' : '12px 28px',
+                  borderRadius: 16,
+                  fontSize: isMobile ? 16 : 18,
                   fontWeight: 900,
-                  boxShadow: `0 4px 12px ${brand}40`,
-                  transform: 'rotate(5deg)'
+                  boxShadow: `0 8px 24px ${brand}50`,
+                  transform: 'rotate(-3deg)'
                 }}>
                   {pricing.badge}
                 </div>
               )}
               
               <div style={{
-                fontSize: 20,
-                color: '#64748b',
-                marginBottom: 8
+                fontSize: isMobile ? 20 : 24,
+                color: '#1e293b',
+                marginBottom: 16,
+                fontWeight: 700
               }}>
-                All-inclusive monthly plan
+                Lock in your {plan} plan today — and enjoy free shipping for life.
               </div>
               
               <div style={{
                 display: 'flex',
-                alignItems: 'center',
+                alignItems: 'baseline',
                 justifyContent: 'center',
-                gap: 16
+                gap: isMobile ? 12 : 20,
+                marginBottom: 16
               }}>
                 {/* Original price strikethrough */}
                 {pricing.originalPrice && (
                   <div style={{
-                    fontSize: 32,
-                    fontWeight: 600,
+                    fontSize: isMobile ? 32 : 42,
+                    fontWeight: 700,
                     color: '#94a3b8',
                     textDecoration: 'line-through',
                     opacity: 0.6
@@ -156,46 +145,82 @@ export const FinalCTA: React.FC<{
                   </div>
                 )}
                 
-                {/* Current price */}
+                {/* Current price - EMPHASIZED */}
                 <div style={{
-                  fontSize: 52,
+                  fontSize: isMobile ? 64 : 80,
                   fontWeight: 900,
-                  color: brand
+                  color: brand,
+                  transform: frame > 60 ? `scale(${pricePulse})` : 'scale(1)',
+                  transition: 'transform 0.3s ease'
                 }}>
-                  {pricing.currency || '$'}{pricing.monthlyPrice}<span style={{fontSize: 28, fontWeight: 600}}>/month</span>
+                  {pricing.currency || '$'}{pricing.monthlyPrice}
+                  <span style={{
+                    fontSize: isMobile ? 28 : 32,
+                    fontWeight: 600,
+                    color: '#64748b'
+                  }}>/mo</span>
                 </div>
               </div>
               
               <div style={{
-                fontSize: 16,
-                color: '#64748b',
-                marginTop: 8
+                fontSize: isMobile ? 16 : 18,
+                color: '#1e293b',
+                marginBottom: 12,
+                fontWeight: 600
               }}>
                 {pricing.description}
               </div>
               
               <div style={{
-                fontSize: 14,
-                color: '#94a3b8',
-                marginTop: 12
+                fontSize: isMobile ? 14 : 16,
+                color: '#64748b',
+                fontWeight: 500
               }}>
-                Medication • Doctor visits • Coaching • Shipping
+                Includes: Medication • Doctor Visits • Nutrition Coaching • Free Shipping
               </div>
             </div>
           </div>
         )}
         
-       
+        {/* Animated Arrow pointing down */}
+        {frame > 90 && (
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            opacity: arrowOpacity,
+            transform: `translateY(${arrowBounce}px)`
+          }}>
+            <div style={{
+              fontSize: isMobile ? 24 : 28,
+              fontWeight: 900,
+              color: brand,
+              marginBottom: 16
+            }}>
+              Click Below to Start
+            </div>
+            
+            {/* Animated down arrow */}
+            <div style={{
+              fontSize: isMobile ? 48 : 64,
+              color: brand,
+              lineHeight: 1
+            }}>
+              ↓
+            </div>
+          </div>
+        )}
         
-        {/* Final trust line */}
+        {/* Trust badges */}
         {frame > 100 && (
           <div style={{
-            marginTop: 48,
-            fontSize: 18,
+            marginTop: isMobile ? 32 : 40,
+            fontSize: isMobile ? 14 : 16,
             color: '#94a3b8',
-            opacity: interpolate(frame, [100, 120], [0, 1], {extrapolateRight: 'clamp'})
+            opacity: interpolate(frame, [100, 120], [0, 1], {extrapolateRight: 'clamp'}),
+            fontWeight: 600
           }}>
-            🔒 HIPAA-compliant • 💳 Secure payments • 🏆 BBB A+ Accredited • ⭐ 4.9/5 rating
+            🔒 HIPAA Compliant • 💳 Secure • 🏆 BBB A+ • ⭐ 4.9/5 Rating
           </div>
         )}
       </div>
